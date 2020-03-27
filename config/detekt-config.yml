@@ -1,0 +1,12 @@
+complexity:
+  active: true
+  LongMethod:
+    active: true
+    threshold: 60
+  LargeClass:
+    active: true
+    threshold: 600
+  LongParameterList:
+    active: true
+    threshold: 6
+    ignoreDefaultParameters: false

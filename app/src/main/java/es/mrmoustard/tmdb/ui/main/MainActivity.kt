@@ -1,7 +1,8 @@
-package es.mrmoustard.tmdb
+package es.mrmoustard.tmdb.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import es.mrmoustard.tmdb.R
 
 class MainActivity : AppCompatActivity() {
 

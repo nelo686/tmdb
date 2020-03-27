@@ -1,28 +1,81 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.71'
+    ext.kotlinVersion = '1.3.71'
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.6.0")
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
-        
+
+        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
     }
 }
+
+ext {
+    /* APP */
+    versionMajor = 0 // Max 9
+    versionMinor = 0 // Max 9
+    versionPatch = 0 // Max 9
+    versionBuild = 1  // Max 99 bump for dogfood builds, public betas, etc.
+
+    versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+    versionName = "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+
+    minSdkVersion = 21
+
+    /* COMMON */
+    targetSdkVersion = 29
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.3'
+}
+
+def arrowVersion = "0.10.4"
+def coroutineVersion = '1.3.0'
+def constraintVersion = "2.0.0-beta4"
+def coroutinesVersionTest = '1.3.0'
+def daggerVersion = '2.26'
+def gsonVersion = '2.8.4'
+def jsonVersion = '20180130'
+def okhttp3Version = '4.4.0'
+def picassoVersion = '2.71828'
+def retrofitVersion = '2.7.2'
+
+ext.libraries = [
+        arrow_core              : "io.arrow-kt:arrow-core:$arrowVersion",
+        arrow_syntax            : "io.arrow-kt:arrow-syntax:$arrowVersion",
+        arrow_meta              : "io.arrow-kt:arrow-meta:$arrowVersion",
+        constraint_layout       : "androidx.constraintlayout:constraintlayout:$constraintVersion",
+        dagger                  : "com.google.dagger:dagger:$daggerVersion",
+        dagger_compiler         : "com.google.dagger:dagger-compiler:$daggerVersion",
+        gson                    : "com.google.code.gson:gson:$gsonVersion",
+        json                    : "org.json:json:$jsonVersion",
+        kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+        kotlin_coroutine_core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion",
+        kotlin_coroutine        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
+        kotlin_gradle           : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion",
+        okhttp3                 : "com.squareup.okhttp3:okhttp:$okhttp3Version",
+        picasso                 : "com.squareup.picasso:picasso:$picassoVersion",
+        retrofit                : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+
+        mockWebServer_okhttp : "com.squareup.okhttp3:mockwebserver:$okhttp3Version"
+]
 
 task clean(type: Delete) {
     delete rootProject.buildDir
