@@ -52,7 +52,7 @@ def constraintVersion = "2.0.0-beta4"
 def coroutinesVersionTest = '1.3.0'
 def daggerVersion = '2.26'
 def gsonVersion = '2.8.4'
-def jsonVersion = '20180130'
+def moshiVersion = '1.9.2'
 def okhttp3Version = '4.4.0'
 def picassoVersion = '2.71828'
 def retrofitVersion = '2.7.2'
@@ -65,14 +65,17 @@ ext.libraries = [
         dagger                  : "com.google.dagger:dagger:$daggerVersion",
         dagger_compiler         : "com.google.dagger:dagger-compiler:$daggerVersion",
         gson                    : "com.google.code.gson:gson:$gsonVersion",
-        json                    : "org.json:json:$jsonVersion",
+        moshi                   : "com.squareup.moshi:moshi:$moshiVersion",
         kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
         kotlin_coroutine_core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion",
         kotlin_coroutine        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
         kotlin_gradle           : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion",
         okhttp3                 : "com.squareup.okhttp3:okhttp:$okhttp3Version",
+        okhttp3_interceptor     : "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
         picasso                 : "com.squareup.picasso:picasso:$picassoVersion",
         retrofit                : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+        retrofit_moshi          : "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+        retrofit_adapter        : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2",
 
         mockWebServer_okhttp : "com.squareup.okhttp3:mockwebserver:$okhttp3Version"
 ]

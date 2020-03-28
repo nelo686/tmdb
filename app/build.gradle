@@ -26,12 +26,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation parent.ext.libraries.kotlin_coroutine_core
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation parent.ext.libraries.constraint_layout
@@ -40,11 +44,15 @@ dependencies {
     api parent.ext.libraries.dagger
     kapt parent.ext.libraries.dagger_compiler
     implementation parent.ext.libraries.retrofit
+    implementation parent.ext.libraries.retrofit_moshi
+    implementation parent.ext.libraries.retrofit_adapter
     implementation parent.ext.libraries.okhttp3
+    implementation parent.ext.libraries.okhttp3_interceptor
+    implementation parent.ext.libraries.moshi
     implementation parent.ext.libraries.picasso
     implementation parent.ext.libraries.arrow_core
     implementation parent.ext.libraries.arrow_syntax
-    implementation parent.ext.libraries.arrow_meta
+    kapt parent.ext.libraries.arrow_meta
 
     testImplementation 'junit:junit:4.13'
 
