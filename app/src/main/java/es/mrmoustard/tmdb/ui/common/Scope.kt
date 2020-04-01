@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.ui
+package es.mrmoustard.tmdb.ui.common
 
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext

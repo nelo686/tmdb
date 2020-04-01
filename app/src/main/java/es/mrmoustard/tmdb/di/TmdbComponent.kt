@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import es.mrmoustard.tmdb.TmdbApp
 import dagger.Component
-import es.mrmoustard.tmdb.di.list.ListComponent
-import es.mrmoustard.tmdb.di.list.ListModule
+import es.mrmoustard.tmdb.di.home.HomeSubComponent
+import es.mrmoustard.tmdb.di.home.HomeModule
 import javax.inject.Singleton
 
 @Singleton
@@ -18,5 +18,5 @@ interface TmdbComponent {
 
     fun getContext(): Context?
 
-    fun plus(module: ListModule): ListComponent
+    fun plus(module: HomeModule): HomeSubComponent
 }
