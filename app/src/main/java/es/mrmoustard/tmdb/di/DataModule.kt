@@ -20,6 +20,10 @@ class DataModule(
     private val bearer: String
 ) {
 
+    companion object {
+        private const val BEARER = "Bearer"
+    }
+
     @Provides
     @Singleton
     fun provideHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
@@ -41,7 +45,7 @@ class DataModule(
 
                     val request = chain.request().newBuilder()
                         .header("Content-Type", "application/json;charset=utf-8")
-                        .header("Authorization", bearer)
+                        .header("Authorization", "$BEARER $bearer")
                         .method(original.method, original.body)
                         .build()
 
