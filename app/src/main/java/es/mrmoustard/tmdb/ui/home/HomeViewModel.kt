@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onMovieClicked(movieId: String) {
+    fun onMovieClicked(movieId: Int) {
         _model.value = HomeUiModel.Navigate(movieId = movieId)
     }
 

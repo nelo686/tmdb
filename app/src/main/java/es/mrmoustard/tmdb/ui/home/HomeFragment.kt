@@ -9,15 +9,20 @@ import androidx.lifecycle.Observer
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.di.home.HomeModule
+import es.mrmoustard.tmdb.ui.detail.DetailActivity
+import kotlinx.android.synthetic.main.fragment_toprated.*
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    @Inject lateinit var viewModel: HomeViewModel
+    @Inject
+    lateinit var viewModel: HomeViewModel
 
-    val component by lazy {
+    private val component by lazy {
         activity?.app?.component?.plus(HomeModule())
     }
+
+    private lateinit var adapter: TopRatedAdapter
 
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
@@ -33,13 +38,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         component?.inject(fragment = this)
+
+        adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
+        rvMovies.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))
     }
 
     private fun updateUi(model: HomeUiModel) {
         when (model) {
-            is HomeUiModel.Content -> {}
-            is HomeUiModel.Navigate -> {}
+            is HomeUiModel.Content -> adapter.items = model.movies
+            is HomeUiModel.Navigate -> {
+                context?.let {
+                    startActivity(DetailActivity.create(context = it, movieId = model.movieId))
+                }
+            }
         }
     }
 }

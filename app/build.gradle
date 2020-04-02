@@ -54,7 +54,7 @@ dependencies {
     implementation parent.ext.libraries.okhttp3_interceptor
     implementation parent.ext.libraries.moshi
     kapt parent.ext.libraries.moshi_codegen
-    implementation parent.ext.libraries.picasso
+    implementation parent.ext.libraries.coil
     implementation parent.ext.libraries.arrow_core
     implementation parent.ext.libraries.arrow_syntax
     kapt parent.ext.libraries.arrow_meta

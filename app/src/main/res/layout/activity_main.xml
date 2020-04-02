@@ -26,4 +26,5 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/navigation"/>
 
+    <include layout="@layout/view_progress" />
 </androidx.constraintlayout.widget.ConstraintLayout>

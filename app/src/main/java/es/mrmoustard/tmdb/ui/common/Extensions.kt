@@ -1,16 +1,17 @@
 package es.mrmoustard.tmdb.ui.common
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import android.app.Activity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import com.google.android.material.snackbar.Snackbar
 
-@Suppress("UNCHECKED_CAST")
-inline fun <reified T : ViewModel> Fragment.getViewModel(crossinline factory: () -> T): T {
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
-    val vmFactory = object : ViewModelProvider.Factory {
-        override fun <U : ViewModel> create(modelClass: Class<U>): U = factory() as U
-    }
-
-    return ViewModelProvider(this, vmFactory).get()
+fun Activity.showMessage(view: View, style: SnackbarStyle) {
+    val snackbar = Snackbar.make(view, style.message, Snackbar.LENGTH_SHORT)
+    snackbar.setBackgroundTint(style.getBackgroundColor(context = this))
+    snackbar.show()
 }
