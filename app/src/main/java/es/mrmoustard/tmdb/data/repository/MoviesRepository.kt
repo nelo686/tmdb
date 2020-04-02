@@ -13,13 +13,13 @@ class MoviesRepository @Inject constructor(private val service: TmdbService) {
         val wrapperDto = service.getTopRated(page = page, region = region)
         Either.right(wrapperDto.mapToDomain())
     } catch (e: Exception) {
-        Either.left(DomainError.Default)
+        Either.left(e.parseErrorFormResponse())
     }
 
     suspend fun getMovieDetails(movieId: String): Either<DomainError, MovieDetail> = try {
         val response = service.getMovieDetails(movieId = movieId)
         Either.right(response.mapToDomain())
     } catch (e: Exception) {
-        Either.left(DomainError.Default)
+        Either.left(e.parseErrorFormResponse())
     }
 }
