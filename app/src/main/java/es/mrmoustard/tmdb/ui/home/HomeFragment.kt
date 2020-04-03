@@ -9,7 +9,11 @@ import androidx.lifecycle.Observer
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.di.home.HomeModule
+import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
+import es.mrmoustard.tmdb.ui.common.inflate
+import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
+import es.mrmoustard.tmdb.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_toprated.*
 import javax.inject.Inject
 
@@ -19,7 +23,7 @@ class HomeFragment : Fragment() {
     lateinit var viewModel: HomeViewModel
 
     private val component by lazy {
-        activity?.app?.component?.plus(HomeModule())
+        (activity as MainActivity).app.component.plus(HomeModule())
     }
 
     private lateinit var adapter: TopRatedAdapter
@@ -32,12 +36,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_toprated, container, false)
+    ): View? = container.inflate(R.layout.fragment_toprated)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        component?.inject(fragment = this)
+        component.inject(fragment = this)
 
         adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
         rvMovies.adapter = adapter
@@ -45,8 +48,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateUi(model: HomeUiModel) {
+        (activity as MainActivity).showLoading(model == HomeUiModel.Loading)
+
         when (model) {
             is HomeUiModel.Content -> adapter.items = model.movies
+            is HomeUiModel.ErrorResponse -> activity?.showMessage(
+                view = rvMovies,
+                style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
+            )
             is HomeUiModel.Navigate -> {
                 context?.let {
                     startActivity(DetailActivity.create(context = it, movieId = model.movieId))

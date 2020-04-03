@@ -2,26 +2,24 @@ package es.mrmoustard.tmdb.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.mrmoustard.tmdb.R
-import es.mrmoustard.tmdb.app
-import es.mrmoustard.tmdb.di.home.HomeModule
 import es.mrmoustard.tmdb.ui.favourites.FavouritesFragment
 import es.mrmoustard.tmdb.ui.home.HomeFragment
 import es.mrmoustard.tmdb.ui.watchlist.WatchListFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_progress.*
 
 class MainActivity : AppCompatActivity() {
-
-    val component by lazy {
-        app.component.plus(module = HomeModule())
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         navigationView.setOnNavigationItemSelectedListener(navListener)
+        openFragment(HomeFragment.newInstance())
     }
 
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -53,5 +51,9 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    fun showLoading(show: Boolean) {
+        loader.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

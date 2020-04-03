@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
             withContext(ioDispatcher) {
                 useCase.execute(page = page, region = region)
             }.fold({
-                val a = 0
+                _model.value = HomeUiModel.ErrorResponse
             }, {
                 _model.value = HomeUiModel.Content(movies = it.results)
             })
