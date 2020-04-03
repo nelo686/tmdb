@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home"
+        android:icon="@drawable/navigation_home_icon_color"
         android:title="Home" />
 
     <item
         android:id="@+id/navigation_watchlist"
-        android:icon="@drawable/watchlist"
+        android:icon="@drawable/navigation_watchlist_icon_color"
         android:title="Watchlist" />
 
     <item
         android:id="@+id/navigation_favourites"
-        android:icon="@drawable/favorites"
+        android:icon="@drawable/navigation_favourite_icon_color"
         android:title="Favorites" />
 </menu>
