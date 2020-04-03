@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = container.inflate(R.layout.fragment_toprated)
+    ): View? = container?.inflate(R.layout.fragment_toprated)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
