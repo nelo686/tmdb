@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">TMDB</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_watchlist">Watchlist</string>
+    <string name="menu_favourites">Favourites</string>
     <string name="something_happen">Ups! Something went wrong</string>
 </resources>

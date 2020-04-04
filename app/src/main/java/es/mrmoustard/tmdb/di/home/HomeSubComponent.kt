@@ -1,7 +1,7 @@
 package es.mrmoustard.tmdb.di.home
 
 import dagger.Subcomponent
-import es.mrmoustard.tmdb.di.FragmentScope
+import es.mrmoustard.tmdb.di.scope.FragmentScope
 import es.mrmoustard.tmdb.ui.home.HomeFragment
 
 @FragmentScope

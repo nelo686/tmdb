@@ -9,6 +9,6 @@ import es.mrmoustard.tmdb.ui.home.HomeViewModel
 class HomeModule {
 
     @Provides
-    fun provideListViewModel(useCase: GetTopRatedUseCase): HomeViewModel =
+    fun provideHomeViewModel(useCase: GetTopRatedUseCase): HomeViewModel =
         HomeViewModel(useCase = useCase)
 }

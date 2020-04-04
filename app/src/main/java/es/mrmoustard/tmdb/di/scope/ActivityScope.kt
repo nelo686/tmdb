@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.di
+package es.mrmoustard.tmdb.di.scope
 
 import javax.inject.Scope
 

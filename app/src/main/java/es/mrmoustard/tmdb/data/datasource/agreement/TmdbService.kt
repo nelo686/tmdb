@@ -15,5 +15,5 @@ interface TmdbService {
     ): WrapperDto
 
     @GET("movie/{movieId}")
-    suspend fun getMovieDetails(@Path("movieId") movieId: String): MovieDetailDto
+    suspend fun getMovieDetails(@Path("movieId") movieId: Int): MovieDetailDto
 }

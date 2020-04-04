@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     lateinit var viewModel: HomeViewModel
 
     private val component by lazy {
-        (activity as MainActivity).app.component.plus(HomeModule())
+        (activity as MainActivity).app.component.plus(module = HomeModule())
     }
 
     private lateinit var adapter: TopRatedAdapter
