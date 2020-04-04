@@ -3,12 +3,13 @@ package es.mrmoustard.tmdb.data.entities
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import es.mrmoustard.tmdb.domain.entities.Collection
 
 @JsonClass(generateAdapter = true)
 data class MovieDetailDto(
     val adult: Boolean,
     @Json(name = "backdrop_path") val backdropPath: String,
-    @Json(name = "belongs_to_collection") val belongsToCollection: CollectionDto,
+    @Json(name = "belongs_to_collection") val belongsToCollection: CollectionDto?,
     val budget: Int,
     val genres: List<GenreDto>,
     val homepage: String,
@@ -36,7 +37,7 @@ data class MovieDetailDto(
 fun MovieDetailDto.mapToDomain(): MovieDetail = MovieDetail(
         adult = adult,
         backdropPath = backdropPath,
-        belongsToCollection = belongsToCollection.mapToDomain(),
+        belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
         budget = budget,
         genres = genres.mapToDomain(),
         homepage = homepage,
