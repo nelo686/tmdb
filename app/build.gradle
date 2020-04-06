@@ -47,18 +47,28 @@ dependencies {
 
     api parent.ext.libraries.dagger
     kapt parent.ext.libraries.dagger_compiler
+
     implementation parent.ext.libraries.retrofit
     implementation parent.ext.libraries.retrofit_moshi
     implementation parent.ext.libraries.retrofit_adapter
+
     implementation parent.ext.libraries.okhttp3
     implementation parent.ext.libraries.okhttp3_interceptor
+
     implementation parent.ext.libraries.moshi
     kapt parent.ext.libraries.moshi_codegen
+
     implementation parent.ext.libraries.coil
+
     implementation parent.ext.libraries.arrow_core
     implementation parent.ext.libraries.arrow_syntax
     kapt parent.ext.libraries.arrow_meta
+
     implementation parent.ext.libraries.lifecycle
+
+    implementation parent.ext.libraries.room
+    implementation parent.ext.libraries.room_ktx
+    kapt parent.ext.libraries.room_compiler
 
     testImplementation 'junit:junit:4.13'
 

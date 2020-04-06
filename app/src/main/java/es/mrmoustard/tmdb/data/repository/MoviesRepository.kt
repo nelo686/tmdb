@@ -2,7 +2,7 @@ package es.mrmoustard.tmdb.data.repository
 
 import arrow.core.Either
 import es.mrmoustard.tmdb.data.datasource.agreement.TmdbService
-import es.mrmoustard.tmdb.data.entities.mapToDomain
+import es.mrmoustard.tmdb.data.entities.api.mapToDomain
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
 import es.mrmoustard.tmdb.domain.errors.DomainError

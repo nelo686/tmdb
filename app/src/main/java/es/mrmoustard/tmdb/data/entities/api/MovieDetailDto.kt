@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.entities.api
 
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import com.squareup.moshi.Json
@@ -19,7 +19,7 @@ data class MovieDetailDto(
     @Json(name = "original_title") val originalTitle: String,
     val overview: String,
     val popularity: Double,
-    @Json(name = "poster_path") val posterPath: String,
+    @Json(name = "poster_path") val posterPath: String?,
     @Json(name = "production_companies") val productionCompanies: List<ProductionCompanyDto>,
     @Json(name = "production_countries") val productionCountries: List<ProductionCountryDto>,
     @Json(name = "release_date") val releaseDate: String,
@@ -35,29 +35,29 @@ data class MovieDetailDto(
 )
 
 fun MovieDetailDto.mapToDomain(): MovieDetail = MovieDetail(
-        adult = adult,
-        backdropPath = backdropPath,
-        belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
-        budget = budget,
-        genres = genres.mapToDomain(),
-        homepage = homepage,
-        id = id,
-        imdbId = imdbId,
-        originalLanguage = originalLanguage,
-        originalTitle = originalTitle,
-        overview = overview,
-        popularity = popularity,
-        posterPath = posterPath,
-        productionCompanies = productionCompanies.mapToDomain(),
-        productionCountries = productionCountries.mapToDomain(),
-        releaseDate = releaseDate,
-        revenue = revenue,
-        runtime = runtime,
-        spokenLanguages = spokenLanguages.mapToDomain(),
-        status = status,
-        tagline = tagline,
-        title = title,
-        video = video,
-        voteAverage = voteAverage,
-        voteCount = voteCount
-    )
+    adult = adult,
+    backdropPath = backdropPath,
+    belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
+    budget = budget,
+    genres = genres.mapToDomain(),
+    homepage = homepage,
+    id = id,
+    imdbId = imdbId,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    popularity = popularity,
+    posterPath = posterPath ?: "",
+    productionCompanies = productionCompanies.mapToDomain(),
+    productionCountries = productionCountries.mapToDomain(),
+    releaseDate = releaseDate,
+    revenue = revenue,
+    runtime = runtime,
+    spokenLanguages = spokenLanguages.mapToDomain(),
+    status = status,
+    tagline = tagline,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount
+)
