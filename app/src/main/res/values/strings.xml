@@ -4,5 +4,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_watchlist">Watchlist</string>
     <string name="menu_favourites">Favourites</string>
+
+    <string name="overview_header">Overview</string>
+    <string name="release_date">Released</string>
+    <string name="genres">Genres</string>
+    <string name="original_title">Original title</string>
+    <string name="original_language">Original language</string>
+    <string name="spoken_languages">Spoken languages</string>
+    <string name="not_available">Not available</string>
+
     <string name="something_happen">Ups! Something went wrong</string>
 </resources>
