@@ -42,8 +42,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         component.inject(fragment = this)
 
-        adapter = TopRatedAdapter()
-//        adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
+        adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
 
         rvMovies.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))
