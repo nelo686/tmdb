@@ -141,7 +141,7 @@ class DetailActivity : AppCompatActivity() {
         ivFavourite.tintColour(colour = favColour)
 
         val watchColour = when (flags.wannaWatchIt) {
-            true -> R.color.yellow
+            true -> R.color.colorAccent
             false -> android.R.color.white
         }
         ivWannaWatch.tintColour(colour = watchColour)

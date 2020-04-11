@@ -28,14 +28,14 @@
                 android:id="@+id/llButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="240dp"
                 android:orientation="horizontal"
                 android:background="@drawable/rounded_corners_blue_shape"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivPoster">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivWannaWatch"
