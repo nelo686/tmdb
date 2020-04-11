@@ -22,22 +22,23 @@ data class MovieDto(
     @Json(name = "vote_count") val voteCount: Int
 )
 
-fun MovieDto.mapToDomain(): Movie = Movie(
-    adult = adult,
-    backdropPath = backdropPath,
-    genreIds = genreIds,
-    id = id,
-    originalLanguage = originalLanguage,
-    originalTitle = originalTitle,
-    overview = overview,
-    popularity = popularity,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    title = title,
-    video = video,
-    voteAverage = voteAverage,
-    voteCount = voteCount
-)
+fun MovieDto.mapToDomain(): Movie =
+    Movie(
+        adult = adult,
+        backdropPath = backdropPath,
+        genreIds = genreIds,
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount
+    )
 
 fun List<MovieDto>.mapToDomain(): List<Movie> {
     val mutableList = mutableListOf<Movie>()

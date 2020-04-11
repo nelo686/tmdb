@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 data class CollectionDto(
     val id: Int,
     val name: String,
-    @Json(name = "poster_path") val posterPath: String,
+    @Json(name = "poster_path") val posterPath: String?,
     @Json(name = "backdrop_path") val backdropPath: String
 )
 
@@ -16,6 +16,6 @@ fun CollectionDto.mapToDomain(): Collection =
     Collection(
         id = id,
         name = name,
-        posterPath = posterPath,
+        posterPath = posterPath ?: "",
         backdropPath = backdropPath
     )

@@ -9,7 +9,8 @@ data class GenreDto(
     val name: String
 )
 
-fun GenreDto.mapToDomain(): Genre = Genre(id = id, name = name)
+fun GenreDto.mapToDomain(): Genre =
+    Genre(id = id, name = name)
 
 fun List<GenreDto>.mapToDomain(): List<Genre> {
     val list: MutableList<Genre> = mutableListOf()

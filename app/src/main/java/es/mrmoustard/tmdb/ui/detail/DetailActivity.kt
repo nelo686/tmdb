@@ -18,9 +18,11 @@ import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.di.detail.DetailModule
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
+import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.common.spanWith
+import es.mrmoustard.tmdb.ui.common.tintColour
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.*
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.view_header.view.*
@@ -35,6 +37,7 @@ class DetailActivity : AppCompatActivity() {
 
     companion object Builder {
         private const val MOVIE_ID = "MOVIE_ID"
+        private const val BOLD_TEXT_SIZE = 21
 
         fun create(context: Context, movieId: Int): Intent =
             Intent(context, DetailActivity::class.java).apply {
@@ -57,8 +60,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        ivFavourite.setOnClickListener { }
-        ivWannaWatch.setOnClickListener { }
+        ivFavourite.setOnClickListener { viewModel.onFavouriteClicked() }
+        ivWannaWatch.setOnClickListener { viewModel.onWannaWatchItClicked() }
     }
 
     private fun updateUi(model: DetailUiModel) {
@@ -70,6 +73,7 @@ class DetailActivity : AppCompatActivity() {
                 view = clRoot,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
+            is Flags -> setButtonsStatus(flags = model.flags)
         }
     }
 
@@ -82,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
         with(highlight) {
             tvAverage.text = SpannableString("${movie.voteAverage}/10").apply {
                 spanWith(movie.voteAverage.toString()) {
-                    what = listOf(AbsoluteSizeSpan(21, true), StyleSpan(Typeface.BOLD))
+                    what = listOf(AbsoluteSizeSpan(BOLD_TEXT_SIZE, true), StyleSpan(Typeface.BOLD))
                     flags = Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 }
             }.toSpanned()
@@ -128,4 +132,18 @@ class DetailActivity : AppCompatActivity() {
                 result
             }
         }
+
+    private fun setButtonsStatus(flags: MovieFlags) {
+        val favColour = when (flags.favourite) {
+            true -> R.color.yellow
+            false -> android.R.color.white
+        }
+        ivFavourite.tintColour(colour = favColour)
+
+        val watchColour = when (flags.wannaWatchIt) {
+            true -> R.color.yellow
+            false -> android.R.color.white
+        }
+        ivWannaWatch.tintColour(colour = watchColour)
+    }
 }

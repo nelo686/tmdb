@@ -1,9 +1,9 @@
 package es.mrmoustard.tmdb.data.entities
 
-import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import es.mrmoustard.tmdb.domain.entities.Collection
+import es.mrmoustard.tmdb.domain.entities.MovieDetail
 
 @JsonClass(generateAdapter = true)
 data class MovieDetailDto(
@@ -19,7 +19,7 @@ data class MovieDetailDto(
     @Json(name = "original_title") val originalTitle: String,
     val overview: String,
     val popularity: Double,
-    @Json(name = "poster_path") val posterPath: String,
+    @Json(name = "poster_path") val posterPath: String?,
     @Json(name = "production_companies") val productionCompanies: List<ProductionCompanyDto>,
     @Json(name = "production_countries") val productionCountries: List<ProductionCountryDto>,
     @Json(name = "release_date") val releaseDate: String,
@@ -34,7 +34,8 @@ data class MovieDetailDto(
     @Json(name = "vote_count") val voteCount: Int
 )
 
-fun MovieDetailDto.mapToDomain(): MovieDetail = MovieDetail(
+fun MovieDetailDto.mapToDomain(): MovieDetail =
+    MovieDetail(
         adult = adult,
         backdropPath = backdropPath,
         belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
@@ -47,7 +48,7 @@ fun MovieDetailDto.mapToDomain(): MovieDetail = MovieDetail(
         originalTitle = originalTitle,
         overview = overview,
         popularity = popularity,
-        posterPath = posterPath,
+        posterPath = posterPath ?: "",
         productionCompanies = productionCompanies.mapToDomain(),
         productionCountries = productionCountries.mapToDomain(),
         releaseDate = releaseDate,

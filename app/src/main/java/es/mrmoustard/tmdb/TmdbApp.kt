@@ -1,6 +1,7 @@
 package es.mrmoustard.tmdb
 
 import android.app.Application
+import es.mrmoustard.tmdb.data.db.MoviesDatabase
 import es.mrmoustard.tmdb.di.DaggerTmdbComponent
 import es.mrmoustard.tmdb.di.DataModule
 import es.mrmoustard.tmdb.di.TmdbComponent
@@ -14,13 +15,18 @@ class TmdbApp : Application() {
             .dataModule(
                 DataModule(
                     baseUrl = BuildConfig.BASE_URL,
-                    bearer = BuildConfig.BEARER)
+                    bearer = BuildConfig.BEARER
+                )
             )
             .build()
     }
 
+    lateinit var db: MoviesDatabase
+        private set
+
     override fun onCreate() {
         super.onCreate()
         component.inject(app = this)
+        db = MoviesDatabase.getInstance(context = this)
     }
 }

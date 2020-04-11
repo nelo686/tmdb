@@ -1,10 +1,13 @@
 package es.mrmoustard.tmdb.di
 
+import android.content.Context
 import es.mrmoustard.tmdb.BuildConfig
 import es.mrmoustard.tmdb.data.datasource.agreement.TmdbService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import es.mrmoustard.tmdb.data.db.MoviesDatabase
+import es.mrmoustard.tmdb.data.repository.MoviesRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -66,4 +69,17 @@ class DataModule(
     @Provides
     fun provideApiService(retrofit: Retrofit): TmdbService =
         retrofit.create(TmdbService::class.java)
+
+    @Provides
+    fun provideMoviesRepository(
+        service: TmdbService,
+        db: MoviesDatabase
+    ) = MoviesRepository(
+        service = service,
+        db = db
+    )
+
+    @Provides
+    fun provideMovieDatabase(context: Context) =
+        MoviesDatabase.getInstance(context = context)
 }
