@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import es.mrmoustard.tmdb.data.datasource.agreement.MovieDao
-import es.mrmoustard.tmdb.data.entities.db.Movie
+import es.mrmoustard.tmdb.domain.entities.*
 
-@Database(entities = [Movie::class], version = 1)
+@Database(entities = [MovieFlags::class], version = 1)
 abstract class MoviesDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
@@ -16,7 +16,7 @@ abstract class MoviesDatabase : RoomDatabase() {
         var TEST_MODE = false
         private var INSTANCE: MoviesDatabase? = null
 
-        fun getInstance(context: Context): MoviesDatabase? {
+        fun getInstance(context: Context): MoviesDatabase {
             if (INSTANCE == null) {
                 if (TEST_MODE) {
                     synchronized(MoviesDatabase::class) {

@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities.api
+package es.mrmoustard.tmdb.data.entities
 
 import es.mrmoustard.tmdb.domain.entities.ProductionCountry
 import com.squareup.moshi.Json

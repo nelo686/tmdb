@@ -29,10 +29,11 @@ class TmdbApp : Application() {
         super.onCreate()
         component.inject(app = this)
 
-        db = Room.databaseBuilder(
-            this,
-            MoviesDatabase::class.java,
-            "movies-db"
-        ).build()
+//        db = Room.databaseBuilder(
+//            this,
+//            MoviesDatabase::class.java,
+//            "movies-db"
+//        ).build()
+        db = MoviesDatabase.getInstance(context = this)
     }
 }

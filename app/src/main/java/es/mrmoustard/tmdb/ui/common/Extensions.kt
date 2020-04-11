@@ -4,7 +4,9 @@ import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -32,4 +34,10 @@ fun SpannableString.spanWith(target: String, apply: SpannableBuilder.() -> Unit)
 class SpannableBuilder {
     lateinit var what: List<Any>
     var flags: Int = 0
+}
+
+fun ImageView.tintColour(colour: Int) {
+    setColorFilter(
+        ContextCompat.getColor(this.context, colour),
+        android.graphics.PorterDuff.Mode.SRC_IN)
 }

@@ -1,9 +1,9 @@
-package es.mrmoustard.tmdb.data.entities.api
+package es.mrmoustard.tmdb.data.entities
 
-import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import es.mrmoustard.tmdb.domain.entities.Collection
+import es.mrmoustard.tmdb.domain.entities.MovieDetail
 
 @JsonClass(generateAdapter = true)
 data class MovieDetailDto(
@@ -34,30 +34,31 @@ data class MovieDetailDto(
     @Json(name = "vote_count") val voteCount: Int
 )
 
-fun MovieDetailDto.mapToDomain(): MovieDetail = MovieDetail(
-    adult = adult,
-    backdropPath = backdropPath,
-    belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
-    budget = budget,
-    genres = genres.mapToDomain(),
-    homepage = homepage,
-    id = id,
-    imdbId = imdbId,
-    originalLanguage = originalLanguage,
-    originalTitle = originalTitle,
-    overview = overview,
-    popularity = popularity,
-    posterPath = posterPath ?: "",
-    productionCompanies = productionCompanies.mapToDomain(),
-    productionCountries = productionCountries.mapToDomain(),
-    releaseDate = releaseDate,
-    revenue = revenue,
-    runtime = runtime,
-    spokenLanguages = spokenLanguages.mapToDomain(),
-    status = status,
-    tagline = tagline,
-    title = title,
-    video = video,
-    voteAverage = voteAverage,
-    voteCount = voteCount
-)
+fun MovieDetailDto.mapToDomain(): MovieDetail =
+    MovieDetail(
+        adult = adult,
+        backdropPath = backdropPath,
+        belongsToCollection = belongsToCollection?.mapToDomain() ?: Collection(),
+        budget = budget,
+        genres = genres.mapToDomain(),
+        homepage = homepage,
+        id = id,
+        imdbId = imdbId,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath ?: "",
+        productionCompanies = productionCompanies.mapToDomain(),
+        productionCountries = productionCountries.mapToDomain(),
+        releaseDate = releaseDate,
+        revenue = revenue,
+        runtime = runtime,
+        spokenLanguages = spokenLanguages.mapToDomain(),
+        status = status,
+        tagline = tagline,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount
+    )

@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities.api
+package es.mrmoustard.tmdb.data.entities
 
 import es.mrmoustard.tmdb.domain.entities.SpokenLanguage
 import com.squareup.moshi.Json

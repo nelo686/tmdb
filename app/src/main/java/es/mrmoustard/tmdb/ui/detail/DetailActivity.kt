@@ -18,9 +18,11 @@ import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.di.detail.DetailModule
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
+import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.common.spanWith
+import es.mrmoustard.tmdb.ui.common.tintColour
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.*
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.view_header.view.*
@@ -57,8 +59,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        ivFavourite.setOnClickListener { }
-        ivWannaWatch.setOnClickListener { }
+        ivFavourite.setOnClickListener { viewModel.onFavouriteClicked() }
+        ivWannaWatch.setOnClickListener { viewModel.onWannaWatchItClicked() }
     }
 
     private fun updateUi(model: DetailUiModel) {
@@ -70,6 +72,7 @@ class DetailActivity : AppCompatActivity() {
                 view = clRoot,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
+            is Flags -> setButtonsStatus(flags = model.flags)
         }
     }
 
@@ -128,4 +131,18 @@ class DetailActivity : AppCompatActivity() {
                 result
             }
         }
+
+    private fun setButtonsStatus(flags: MovieFlags) {
+        val favColour = when (flags.favourite) {
+            true -> R.color.yellow
+            false -> android.R.color.white
+        }
+        ivFavourite.tintColour(colour = favColour)
+
+        val watchColour = when (flags.wannaWatchIt) {
+            true -> R.color.yellow
+            false -> android.R.color.white
+        }
+        ivWannaWatch.tintColour(colour = watchColour)
+    }
 }

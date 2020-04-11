@@ -1,22 +1,21 @@
 package es.mrmoustard.tmdb.data.datasource.agreement
 
 import androidx.room.*
-import es.mrmoustard.tmdb.data.entities.db.Movie
+import es.mrmoustard.tmdb.domain.entities.MovieFlags
+import javax.inject.Inject
 
 @Dao
 interface MovieDao {
 
-    fun movieCount(): Int
-
-    @Query("SELECT * FROM Movies WHERE id = :id")
-    fun findById(id: Int): Movie
+    @Query("SELECT * FROM MovieFlags WHERE id = :id")
+    suspend fun findById(id: Int): MovieFlags?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movies: List<Movie>)
+    suspend fun insert(flags: MovieFlags)
 
     @Delete
-    fun delete(movie: Movie)
+    suspend fun delete(flags: MovieFlags)
 
-    @Query("UPDATE Movies SET favourite =:favourite, wannaWatchIt =:wannaWatchIt WHERE id =:movieId")
-    fun update(movieId: Int, favourite: Boolean = false, wannaWatchIt: Boolean = false)
+    @Query("UPDATE MovieFlags SET favourite =:favourite, wannaWatchIt =:wannaWatchIt WHERE id =:movieId")
+    suspend fun update(movieId: Int, favourite: Boolean = false, wannaWatchIt: Boolean = false)
 }

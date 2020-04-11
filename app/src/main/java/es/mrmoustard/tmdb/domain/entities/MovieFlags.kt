@@ -4,10 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Collection(
+data class MovieFlags(
     @PrimaryKey(autoGenerate = false)
-    val id: Int = -1,
-    val name: String = "",
-    val posterPath: String = "",
-    val backdropPath: String = ""
+    val id: Int,
+    val favourite: Boolean = false,
+    val wannaWatchIt: Boolean = false
 )

@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities.api
+package es.mrmoustard.tmdb.data.entities
 
 import es.mrmoustard.tmdb.domain.entities.Genre
 import com.squareup.moshi.JsonClass
@@ -9,7 +9,8 @@ data class GenreDto(
     val name: String
 )
 
-fun GenreDto.mapToDomain(): Genre = Genre(id = id, name = name)
+fun GenreDto.mapToDomain(): Genre =
+    Genre(id = id, name = name)
 
 fun List<GenreDto>.mapToDomain(): List<Genre> {
     val list: MutableList<Genre> = mutableListOf()
