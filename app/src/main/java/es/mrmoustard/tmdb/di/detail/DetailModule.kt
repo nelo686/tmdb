@@ -2,7 +2,9 @@ package es.mrmoustard.tmdb.di.detail
 
 import dagger.Module
 import dagger.Provides
-import es.mrmoustard.tmdb.domain.usecases.*
+import es.mrmoustard.tmdb.domain.usecases.FindMovieFlagsUseCase
+import es.mrmoustard.tmdb.domain.usecases.GetMovieDetailUseCase
+import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieFlagsUseCase
 import es.mrmoustard.tmdb.ui.detail.DetailViewModel
 
 @Module
@@ -12,14 +14,10 @@ class DetailModule {
     fun provideDetailViewModel(
         movieDetailUseCase: GetMovieDetailUseCase,
         findMovieFlagsUseCase: FindMovieFlagsUseCase,
-        insertMovieFlagsUseCase: InsertMovieFlagsUseCase,
-        updateMovieFlagsUseCase: UpdateMovieFlagsUseCase,
-        deleteMovieFlagsUseCase: DeleteMovieFlagsUseCase
+        updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
     ): DetailViewModel = DetailViewModel(
         movieDetailUseCase = movieDetailUseCase,
         findMovieFlagsUseCase = findMovieFlagsUseCase,
-        insertMovieFlagsUseCase = insertMovieFlagsUseCase,
-        updateMovieFlagsUseCase = updateMovieFlagsUseCase,
-        deleteMovieFlagsUseCase = deleteMovieFlagsUseCase
+        updateOrInsertMovieFlagsUseCase = updateOrInsertMovieFlagsUseCase
     )
 }

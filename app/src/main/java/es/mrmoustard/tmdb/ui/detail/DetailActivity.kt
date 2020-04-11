@@ -37,6 +37,7 @@ class DetailActivity : AppCompatActivity() {
 
     companion object Builder {
         private const val MOVIE_ID = "MOVIE_ID"
+        private const val BOLD_TEXT_SIZE = 21
 
         fun create(context: Context, movieId: Int): Intent =
             Intent(context, DetailActivity::class.java).apply {
@@ -85,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
         with(highlight) {
             tvAverage.text = SpannableString("${movie.voteAverage}/10").apply {
                 spanWith(movie.voteAverage.toString()) {
-                    what = listOf(AbsoluteSizeSpan(21, true), StyleSpan(Typeface.BOLD))
+                    what = listOf(AbsoluteSizeSpan(BOLD_TEXT_SIZE, true), StyleSpan(Typeface.BOLD))
                     flags = Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 }
             }.toSpanned()

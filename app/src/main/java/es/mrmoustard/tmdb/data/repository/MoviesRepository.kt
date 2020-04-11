@@ -51,4 +51,13 @@ class MoviesRepository(
             wannaWatchIt = flags.wannaWatchIt
         )
     }
+
+    suspend fun updateOrInsertMovieFlags(flags: MovieFlags) {
+        val item = db.movieDao().findById(id = flags.id)
+        when {
+            item == null -> insertMovieFlags(flags = flags)
+            !flags.favourite && !flags.wannaWatchIt -> deleteMovieFlags(flags = item)
+            else -> updateMovieFlags(flags = flags)
+        }
+    }
 }

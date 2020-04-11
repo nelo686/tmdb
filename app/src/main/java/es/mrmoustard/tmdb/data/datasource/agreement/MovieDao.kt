@@ -2,7 +2,6 @@ package es.mrmoustard.tmdb.data.datasource.agreement
 
 import androidx.room.*
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
-import javax.inject.Inject
 
 @Dao
 interface MovieDao {

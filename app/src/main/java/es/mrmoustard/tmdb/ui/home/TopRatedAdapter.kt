@@ -2,7 +2,6 @@ package es.mrmoustard.tmdb.ui.home
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import es.mrmoustard.tmdb.R
@@ -39,10 +38,4 @@ class TopRatedAdapter(private val listener: (Int) -> Unit) :
             tvTitle.text = item.title
         }
     }
-}
-
-class DiffCallback : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
 }

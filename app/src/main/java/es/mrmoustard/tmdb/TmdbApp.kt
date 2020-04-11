@@ -1,7 +1,6 @@
 package es.mrmoustard.tmdb
 
 import android.app.Application
-import androidx.room.Room
 import es.mrmoustard.tmdb.data.db.MoviesDatabase
 import es.mrmoustard.tmdb.di.DaggerTmdbComponent
 import es.mrmoustard.tmdb.di.DataModule
@@ -28,12 +27,6 @@ class TmdbApp : Application() {
     override fun onCreate() {
         super.onCreate()
         component.inject(app = this)
-
-//        db = Room.databaseBuilder(
-//            this,
-//            MoviesDatabase::class.java,
-//            "movies-db"
-//        ).build()
         db = MoviesDatabase.getInstance(context = this)
     }
 }
