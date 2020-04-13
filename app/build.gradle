@@ -70,6 +70,9 @@ dependencies {
     implementation parent.ext.libraries.room_ktx
     kapt parent.ext.libraries.room_compiler
 
+    implementation parent.ext.libraries.navigation
+    implementation parent.ext.libraries.navigation_fragment
+
     testImplementation 'junit:junit:4.13'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

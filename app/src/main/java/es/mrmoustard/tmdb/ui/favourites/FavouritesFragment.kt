@@ -9,10 +9,6 @@ import es.mrmoustard.tmdb.R
 
 class FavouritesFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): FavouritesFragment = FavouritesFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
