@@ -9,10 +9,6 @@ import es.mrmoustard.tmdb.R
 
 class WatchListFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): WatchListFragment = WatchListFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

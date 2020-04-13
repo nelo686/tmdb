@@ -28,10 +28,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: TopRatedAdapter
 
-    companion object {
-        fun newInstance(): HomeFragment = HomeFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
