@@ -27,7 +27,6 @@ import es.mrmoustard.tmdb.ui.detail.DetailUiModel.*
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.view_header.view.*
 import kotlinx.android.synthetic.main.view_highlight_header.view.*
-import kotlinx.android.synthetic.main.view_progress.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {

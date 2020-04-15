@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
+import es.mrmoustard.tmdb.databinding.FragmentTopratedBinding
 import es.mrmoustard.tmdb.di.home.HomeModule
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
-import es.mrmoustard.tmdb.ui.common.inflate
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_toprated.*
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
@@ -26,13 +25,18 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).app.component.plus(module = HomeModule())
     }
 
+    private lateinit var binding: FragmentTopratedBinding
+
     private lateinit var adapter: TopRatedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = container?.inflate(R.layout.fragment_toprated)
+    ): View? {
+        binding = FragmentTopratedBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +44,7 @@ class HomeFragment : Fragment() {
 
         adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
 
-        rvMovies.adapter = adapter
+        binding.rvMovies.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))
     }
 
@@ -50,7 +54,7 @@ class HomeFragment : Fragment() {
         when (model) {
             is HomeUiModel.Content -> adapter.items = model.movies
             is HomeUiModel.ErrorResponse -> activity?.showMessage(
-                view = rvMovies,
+                view = binding.rvMovies,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
             is HomeUiModel.Navigate -> {

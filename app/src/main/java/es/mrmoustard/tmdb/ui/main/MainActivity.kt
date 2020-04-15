@@ -8,14 +8,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import es.mrmoustard.tmdb.R
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.view_progress.*
+import es.mrmoustard.tmdb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfig = AppBarConfiguration(
@@ -26,10 +29,10 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController = navController, configuration = appBarConfig)
-        navigationView.setupWithNavController(navController = navController)
+        binding.navigationView.setupWithNavController(navController = navController)
     }
 
     fun showLoading(show: Boolean) {
-        loader.visibility = if (show) View.VISIBLE else View.GONE
+        binding.loader.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

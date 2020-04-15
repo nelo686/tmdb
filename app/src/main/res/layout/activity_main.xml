@@ -27,5 +27,15 @@
         app:itemTextColor="@color/navigation_item_text_color"
         app:menu="@menu/navigation"/>
 
-    <include layout="@layout/view_progress" />
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_corners_shape"
+        android:indeterminateDrawable="@drawable/progress"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
