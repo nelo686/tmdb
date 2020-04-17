@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class MovieFlags(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
+    val title: String = "",
+    val backdropPath: String = "",
     val favourite: Boolean = false,
     val wannaWatchIt: Boolean = false
 )

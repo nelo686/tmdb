@@ -17,4 +17,10 @@ interface MovieDao {
 
     @Query("UPDATE MovieFlags SET favourite =:favourite, wannaWatchIt =:wannaWatchIt WHERE id =:movieId")
     suspend fun update(movieId: Int, favourite: Boolean = false, wannaWatchIt: Boolean = false)
+
+    @Query("SELECT * FROM MovieFlags WHERE wannaWatchIt = 1")
+    suspend fun findMoviesToWatch(): List<MovieFlags>
+
+    @Query("SELECT * FROM MovieFlags WHERE favourite = 1")
+    suspend fun findFavourites(): List<MovieFlags>
 }

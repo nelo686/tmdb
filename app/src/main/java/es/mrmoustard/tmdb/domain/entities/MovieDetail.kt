@@ -27,3 +27,6 @@ data class MovieDetail(
     val voteAverage: Double,
     val voteCount: Int
 )
+
+fun MovieDetail.toMovie(): Movie =
+    Movie(id = id, title = title, backdropPath = backdropPath)

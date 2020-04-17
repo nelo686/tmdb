@@ -1,18 +1,18 @@
 package es.mrmoustard.tmdb.domain.entities
 
 data class Movie(
-    val adult: Boolean,
-    val backdropPath: String,
-    val genreIds: List<Int>,
-    val id: Int,
-    val originalLanguage: String,
-    val originalTitle: String,
-    val overview: String,
-    val popularity: Double,
-    val posterPath: String,
-    val releaseDate: String,
-    val title: String,
-    val video: Boolean,
-    val voteAverage: Double,
-    val voteCount: Int
+    val adult: Boolean = false,
+    val backdropPath: String = "",
+    val genreIds: List<Int> = emptyList(),
+    val id: Int = -1,
+    val originalLanguage: String = "",
+    val originalTitle: String = "",
+    val overview: String = "",
+    val popularity: Double = 0.0,
+    val posterPath: String = "",
+    val releaseDate: String = "",
+    val title: String = "",
+    val video: Boolean = false,
+    val voteAverage: Double = 0.0,
+    val voteCount: Int = 0
 )

@@ -3,6 +3,8 @@ package es.mrmoustard.tmdb.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import es.mrmoustard.tmdb.domain.entities.Movie
+import es.mrmoustard.tmdb.domain.entities.toMovie
 import es.mrmoustard.tmdb.domain.usecases.FindMovieFlagsUseCase
 import es.mrmoustard.tmdb.domain.usecases.GetMovieDetailUseCase
 import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieFlagsUseCase
@@ -18,7 +20,7 @@ class DetailViewModel @Inject constructor(
     private val updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
 ) : ViewModel(), Scope by Scope.Impl() {
 
-    private var movieId: Int = -1
+    private lateinit var movie: Movie
     private val _model = MutableLiveData<DetailUiModel>()
     val model: LiveData<DetailUiModel>
         get() = _model
@@ -40,7 +42,7 @@ class DetailViewModel @Inject constructor(
         }.fold({
             _model.value = DetailUiModel.ErrorResponse
         }, {
-            this.movieId = it.id
+            this.movie = it.toMovie()
             _model.value = DetailUiModel.Content(movie = it)
             _model.value = Flags(flags = findFlags())
         })
@@ -54,7 +56,11 @@ class DetailViewModel @Inject constructor(
     fun onFavouriteClicked() {
         launch {
             val found = findFlags()
-            val flags = found.copy(favourite = !found.favourite)
+            val flags = found.copy(
+                title = movie.title,
+                backdropPath = movie.backdropPath,
+                favourite = !found.favourite
+            )
             withContext(ioDispatcher) {
                 updateOrInsertMovieFlagsUseCase.execute(flags = flags)
             }
@@ -64,13 +70,17 @@ class DetailViewModel @Inject constructor(
 
     private suspend fun findFlags() =
         withContext(ioDispatcher) {
-            findMovieFlagsUseCase.execute(movieId = movieId)
+            findMovieFlagsUseCase.execute(movieId = movie.id)
         }
 
     fun onWannaWatchItClicked() {
         launch {
             val found = findFlags()
-            val flags = found.copy(wannaWatchIt = !found.wannaWatchIt)
+            val flags = found.copy(
+                title = movie.title,
+                backdropPath = movie.backdropPath,
+                wannaWatchIt = !found.wannaWatchIt
+            )
             withContext(ioDispatcher) {
                 updateOrInsertMovieFlagsUseCase.execute(flags = flags)
             }

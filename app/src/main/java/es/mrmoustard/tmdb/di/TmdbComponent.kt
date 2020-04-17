@@ -6,8 +6,10 @@ import es.mrmoustard.tmdb.TmdbApp
 import dagger.Component
 import es.mrmoustard.tmdb.di.detail.DetailModule
 import es.mrmoustard.tmdb.di.detail.DetailSubComponent
-import es.mrmoustard.tmdb.di.home.HomeSubComponent
 import es.mrmoustard.tmdb.di.home.HomeModule
+import es.mrmoustard.tmdb.di.home.HomeSubComponent
+import es.mrmoustard.tmdb.di.watchlist.WatchListModule
+import es.mrmoustard.tmdb.di.watchlist.WatchListSubComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -21,6 +23,8 @@ interface TmdbComponent {
     fun getContext(): Context?
 
     fun plus(module: HomeModule): HomeSubComponent
+
+    fun plus(module: WatchListModule): WatchListSubComponent
 
     fun plus(module: DetailModule): DetailSubComponent
 }

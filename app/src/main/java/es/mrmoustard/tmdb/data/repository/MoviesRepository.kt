@@ -60,4 +60,10 @@ class MoviesRepository(
             else -> updateMovieFlags(flags = flags)
         }
     }
+
+    suspend fun findMoviesToWatch(): List<MovieFlags> =
+        db.movieDao().findMoviesToWatch()
+
+    suspend fun findFavouriteMovies(): List<MovieFlags> =
+        db.movieDao().findFavourites()
 }

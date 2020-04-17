@@ -12,6 +12,9 @@
     <string name="original_language">Original language</string>
     <string name="spoken_languages">Spoken languages</string>
     <string name="not_available">Not available</string>
+    
+    <string name="favourite_empty_state">There\'s no favorite movie yet. Go to movie details to set it.</string>
+    <string name="watchlist_empty_state">There\'s no movie you want to watch yet. Go to movie details to set it.</string>
 
     <string name="something_happen">Ups! Something went wrong</string>
 </resources>

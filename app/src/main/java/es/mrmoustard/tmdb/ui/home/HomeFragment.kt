@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentTopratedBinding
 
-    private lateinit var adapter: TopRatedAdapter
+    private lateinit var adapter: ItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         component.inject(fragment = this)
 
-        adapter = TopRatedAdapter { viewModel.onMovieClicked(movieId = it) }
+        adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
 
         binding.rvMovies.adapter = adapter
         viewModel.model.observe(this, Observer(::updateUi))

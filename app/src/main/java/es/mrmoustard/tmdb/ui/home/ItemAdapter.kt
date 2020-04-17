@@ -1,17 +1,17 @@
 package es.mrmoustard.tmdb.ui.home
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import es.mrmoustard.tmdb.R
+import es.mrmoustard.tmdb.databinding.ViewMovieBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.ui.common.AutoUpdatableAdapter
-import es.mrmoustard.tmdb.ui.common.inflate
 import kotlinx.android.synthetic.main.view_movie.view.*
 import kotlin.properties.Delegates
 
-class TopRatedAdapter(private val listener: (Int) -> Unit) :
+class ItemAdapter(private val listener: (Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), AutoUpdatableAdapter {
 
     companion object {
@@ -23,7 +23,13 @@ class TopRatedAdapter(private val listener: (Int) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(parent.inflate(R.layout.view_movie))
+        ViewHolder(
+            ViewMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ).root
+        )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ViewHolder).bind(item = items[position], listener = listener)
