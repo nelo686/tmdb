@@ -4,6 +4,7 @@ import arrow.core.Either
 import es.mrmoustard.tmdb.data.datasource.agreement.TmdbService
 import es.mrmoustard.tmdb.data.db.MoviesDatabase
 import es.mrmoustard.tmdb.data.entities.mapToDomain
+import es.mrmoustard.tmdb.data.entities.setFlags
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
@@ -27,13 +28,14 @@ class MoviesRepository(
     }
 
     suspend fun getMovieDetails(movieId: Int): Either<DomainError, MovieDetail> = try {
-        val response = service.getMovieDetails(movieId = movieId)
-        Either.right(response.mapToDomain())
+        var detailDto = service.getMovieDetails(movieId = movieId)
+        detailDto = detailDto.setFlags(flags = findMovieFlags(movieId = movieId))
+        Either.right(detailDto.mapToDomain())
     } catch (e: Exception) {
         Either.left(e.parseErrorFormResponse())
     }
 
-    suspend fun findMovieFlags(movieId: Int): MovieFlags =
+    private suspend fun findMovieFlags(movieId: Int): MovieFlags =
         db.movieDao().findById(id = movieId) ?: MovieFlags(id = movieId)
 
     suspend fun insertMovieFlags(flags: MovieFlags) {

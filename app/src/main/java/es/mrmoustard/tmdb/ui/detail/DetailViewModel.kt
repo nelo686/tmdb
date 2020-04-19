@@ -3,9 +3,8 @@ package es.mrmoustard.tmdb.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.mrmoustard.tmdb.domain.entities.Movie
-import es.mrmoustard.tmdb.domain.entities.toMovie
-import es.mrmoustard.tmdb.domain.usecases.FindMovieFlagsUseCase
+import es.mrmoustard.tmdb.domain.entities.MovieFlags
+import es.mrmoustard.tmdb.domain.entities.toMovieFlags
 import es.mrmoustard.tmdb.domain.usecases.GetMovieDetailUseCase
 import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieFlagsUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
@@ -16,11 +15,10 @@ import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(
     private val movieDetailUseCase: GetMovieDetailUseCase,
-    private val findMovieFlagsUseCase: FindMovieFlagsUseCase,
     private val updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
 ) : ViewModel(), Scope by Scope.Impl() {
 
-    private lateinit var movie: Movie
+    private lateinit var movie: MovieFlags
     private val _model = MutableLiveData<DetailUiModel>()
     val model: LiveData<DetailUiModel>
         get() = _model
@@ -42,9 +40,8 @@ class DetailViewModel @Inject constructor(
         }.fold({
             _model.value = DetailUiModel.ErrorResponse
         }, {
-            this.movie = it.toMovie()
+            this.movie = it.toMovieFlags()
             _model.value = DetailUiModel.Content(movie = it)
-            _model.value = Flags(flags = findFlags())
         })
     }
 
@@ -54,37 +51,21 @@ class DetailViewModel @Inject constructor(
     }
 
     fun onFavouriteClicked() {
+        movie = movie.copy(favourite = !movie.favourite)
+        updateOrInsertMovieAtDatabase(item = movie)
+    }
+
+    private fun updateOrInsertMovieAtDatabase(item: MovieFlags) {
         launch {
-            val found = findFlags()
-            val flags = found.copy(
-                title = movie.title,
-                backdropPath = movie.backdropPath,
-                favourite = !found.favourite
-            )
             withContext(ioDispatcher) {
-                updateOrInsertMovieFlagsUseCase.execute(flags = flags)
+                updateOrInsertMovieFlagsUseCase.execute(flags = item)
             }
-            _model.value = Flags(flags = flags)
+            _model.value = Flags(flags = item)
         }
     }
 
-    private suspend fun findFlags() =
-        withContext(ioDispatcher) {
-            findMovieFlagsUseCase.execute(movieId = movie.id)
-        }
-
     fun onWannaWatchItClicked() {
-        launch {
-            val found = findFlags()
-            val flags = found.copy(
-                title = movie.title,
-                backdropPath = movie.backdropPath,
-                wannaWatchIt = !found.wannaWatchIt
-            )
-            withContext(ioDispatcher) {
-                updateOrInsertMovieFlagsUseCase.execute(flags = flags)
-            }
-            _model.value = Flags(flags = flags)
-        }
+        movie = movie.copy(wannaWatchIt = !movie.wannaWatchIt)
+        updateOrInsertMovieAtDatabase(item = movie)
     }
 }

@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import es.mrmoustard.tmdb.domain.entities.Collection
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
+import es.mrmoustard.tmdb.domain.entities.MovieFlags
 
 @JsonClass(generateAdapter = true)
 data class MovieDetailDto(
@@ -31,8 +32,13 @@ data class MovieDetailDto(
     val title: String,
     val video: Boolean,
     @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "vote_count") val voteCount: Int
+    @Json(name = "vote_count") val voteCount: Int,
+    val favourite: Boolean = false,
+    val wannaWatchIt: Boolean = false
 )
+
+fun MovieDetailDto.setFlags(flags: MovieFlags): MovieDetailDto =
+    copy(favourite = flags.favourite, wannaWatchIt = flags.wannaWatchIt)
 
 fun MovieDetailDto.mapToDomain(): MovieDetail =
     MovieDetail(
@@ -60,5 +66,7 @@ fun MovieDetailDto.mapToDomain(): MovieDetail =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
+        favourite = favourite,
+        wannaWatchIt = wannaWatchIt
     )

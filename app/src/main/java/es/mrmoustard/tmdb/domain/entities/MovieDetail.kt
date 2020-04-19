@@ -25,8 +25,16 @@ data class MovieDetail(
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
+    val favourite: Boolean = false,
+    val wannaWatchIt: Boolean = false
 )
 
-fun MovieDetail.toMovie(): Movie =
-    Movie(id = id, title = title, backdropPath = backdropPath)
+fun MovieDetail.toMovieFlags(): MovieFlags =
+    MovieFlags(
+        id = id,
+        title = title,
+        backdropPath = backdropPath,
+        favourite = favourite,
+        wannaWatchIt = wannaWatchIt
+    )

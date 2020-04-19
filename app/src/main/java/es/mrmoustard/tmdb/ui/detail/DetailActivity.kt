@@ -101,6 +101,13 @@ class DetailActivity : AppCompatActivity() {
 
         overviewHeader.tvHeaderTitle.text = getString(R.string.overview_header)
         tvOverview.text = movie.overview
+        setButtonsStatus(
+            flags = MovieFlags(
+                id = movie.id,
+                favourite = movie.favourite,
+                wannaWatchIt = movie.wannaWatchIt
+            )
+        )
     }
 
     private fun setTagline(tagline: String) {
