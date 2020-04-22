@@ -9,16 +9,11 @@ import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
 import es.mrmoustard.tmdb.domain.errors.DomainError
-import es.mrmoustard.tmdb.ui.common.Scope
 
 class MoviesRepository(
     private val service: TmdbService,
     private val db: MoviesDatabase
-) : Scope by Scope.Impl() {
-
-    init {
-        initScope()
-    }
+) {
 
     suspend fun getTopRated(page: Int, region: String): Either<DomainError, TopRatedWrapper> = try {
         val wrapperDto = service.getTopRated(page = page, region = region)
