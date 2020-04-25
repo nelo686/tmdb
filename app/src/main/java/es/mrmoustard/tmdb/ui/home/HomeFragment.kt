@@ -1,5 +1,6 @@
 package es.mrmoustard.tmdb.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,11 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: ItemAdapter
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(fragment = this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,12 +46,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        component.inject(fragment = this)
 
         adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
 
         binding.rvMovies.adapter = adapter
-        viewModel.model.observe(this, Observer(::updateUi))
+        viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
     }
 
     private fun updateUi(model: HomeUiModel) {

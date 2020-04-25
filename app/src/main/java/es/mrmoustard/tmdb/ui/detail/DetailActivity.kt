@@ -49,9 +49,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(activity = this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
-        component.inject(activity = this)
 
         viewModel.onViewCreated(intent.extras?.getInt(MOVIE_ID) ?: -1)
         viewModel.model.observe(this, Observer(::updateUi))

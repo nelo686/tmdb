@@ -46,12 +46,12 @@ ext {
     buildToolsVersion = '29.0.3'
 }
 
-def arrowVersion = "0.10.4"
+def arrowVersion = "0.10.5"
 def coilVersion = '0.9.5'
 def constraintVersion = "2.0.0-beta4"
 def coroutineVersion = '1.3.5'
 def coroutinesVersionTest = '1.3.5'
-def daggerVersion = '2.26'
+def daggerVersion = '2.27'
 def gsonVersion = '2.8.4'
 def lifecycleVersion = '2.2.0'
 def materialVersion = '1.1.0'

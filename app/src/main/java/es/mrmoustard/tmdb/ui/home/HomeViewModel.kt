@@ -7,9 +7,8 @@ import es.mrmoustard.tmdb.domain.usecases.GetTopRatedUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
     private val useCase: GetTopRatedUseCase
 ) : ViewModel(), Scope by Scope.Impl() {
 

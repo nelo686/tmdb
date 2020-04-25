@@ -11,9 +11,8 @@ import es.mrmoustard.tmdb.ui.common.Scope
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.Flags
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class DetailViewModel @Inject constructor(
+class DetailViewModel(
     private val movieDetailUseCase: GetMovieDetailUseCase,
     private val updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
 ) : ViewModel(), Scope by Scope.Impl() {

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.domain.usecases.GetMoviesToWatchUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
-import es.mrmoustard.tmdb.ui.home.HomeUiModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
