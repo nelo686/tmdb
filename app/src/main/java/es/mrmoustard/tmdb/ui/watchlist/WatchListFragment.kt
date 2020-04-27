@@ -24,7 +24,7 @@ class WatchListFragment : Fragment() {
     lateinit var viewModel: WatchListViewModel
 
     private val component by lazy {
-        (activity as MainActivity).app.component.plus(module = WatchListModule())
+        (requireActivity() as MainActivity).app.component.plus(module = WatchListModule())
     }
 
     private lateinit var binding: FragmentWatchlistBinding
