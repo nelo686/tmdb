@@ -16,11 +16,14 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val navController by lazy {
+        findNavController(R.id.nav_host_fragment)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -31,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController = navController, configuration = appBarConfig)
         binding.navigationView.setupWithNavController(navController = navController)
     }
+
+    override fun onSupportNavigateUp(): Boolean =
+        navController.navigateUp()
 
     fun showLoading(show: Boolean) {
         binding.loader.visibility = if (show) View.VISIBLE else View.GONE

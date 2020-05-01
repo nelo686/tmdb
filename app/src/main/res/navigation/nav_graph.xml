@@ -8,13 +8,46 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="es.mrmoustard.tmdb.ui.home.HomeFragment"
-        android:label="@string/menu_home" />
+        android:label="@string/menu_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_detail_activity"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/fade_in" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_watchlist"
         android:name="es.mrmoustard.tmdb.ui.watchlist.WatchListFragment"
-        android:label="@string/menu_watchlist" />
+        android:label="@string/menu_watchlist" >
+        <action
+            android:id="@+id/action_navigation_watchlist_to_detail_activity"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/fade_in"/>
+    </fragment>
     <fragment
         android:id="@+id/navigation_favourites"
         android:name="es.mrmoustard.tmdb.ui.favourites.FavouritesFragment"
-        android:label="@string/menu_favourites" />
+        android:label="@string/menu_favourites" >
+        <action
+            android:id="@+id/action_navigation_favourites_to_detail_activity"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/fade_in" />
+    </fragment>
+    <activity
+        android:id="@+id/detail_activity"
+        android:name="es.mrmoustard.tmdb.ui.detail.DetailActivity"
+        android:label="DetailActivity" >
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </activity>
 </navigation>

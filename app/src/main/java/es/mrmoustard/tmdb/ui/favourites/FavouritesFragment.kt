@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentFavouritesBinding
 import es.mrmoustard.tmdb.di.favourite.FavouriteModule
@@ -61,9 +63,10 @@ class FavouritesFragment : Fragment() {
             is Content -> setContentState(movies = model.movies)
             is EmptyState -> setEmptyState()
             is Navigate ->
-                context?.let {
-                    startActivity(DetailActivity.create(context = it, movieId = model.movieId))
-                }
+                findNavController().navigate(
+                    R.id.action_navigation_favourites_to_detail_activity,
+                    Bundle().apply { putInt(DetailActivity.MOVIE_ID, model.movieId) }
+                )
         }
     }
 

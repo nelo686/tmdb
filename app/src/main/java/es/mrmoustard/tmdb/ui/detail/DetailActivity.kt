@@ -1,7 +1,5 @@
 package es.mrmoustard.tmdb.ui.detail
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -35,13 +33,8 @@ class DetailActivity : AppCompatActivity() {
     lateinit var viewModel: DetailViewModel
 
     companion object Builder {
-        private const val MOVIE_ID = "MOVIE_ID"
+        const val MOVIE_ID = "MOVIE_ID"
         private const val BOLD_TEXT_SIZE = 21
-
-        fun create(context: Context, movieId: Int): Intent =
-            Intent(context, DetailActivity::class.java).apply {
-                putExtra(MOVIE_ID, movieId)
-            }
     }
 
     private val component by lazy {
