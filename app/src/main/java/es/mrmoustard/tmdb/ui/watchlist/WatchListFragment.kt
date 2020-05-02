@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentWatchlistBinding
-import es.mrmoustard.tmdb.di.watchlist.WatchListModule
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
@@ -26,7 +25,7 @@ class WatchListFragment : Fragment() {
     lateinit var viewModel: WatchListViewModel
 
     private val component by lazy {
-        (requireActivity() as MainActivity).app.component.plus(module = WatchListModule())
+        (requireActivity() as MainActivity).component.addWatchListModule()
     }
 
     private lateinit var binding: FragmentWatchlistBinding
@@ -35,7 +34,7 @@ class WatchListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        component.inject(fragment = this)
+        component.create(fragment = this)
     }
 
     override fun onCreateView(

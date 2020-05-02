@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentFavouritesBinding
-import es.mrmoustard.tmdb.di.favourite.FavouriteModule
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
@@ -26,7 +25,7 @@ class FavouritesFragment : Fragment() {
     lateinit var viewModel: FavouriteViewModel
 
     private val component by lazy {
-        (requireActivity() as MainActivity).app.component.plus(module = FavouriteModule())
+        (requireActivity() as MainActivity).component.addFavouriteModule()
     }
 
     private lateinit var binding: FragmentFavouritesBinding
@@ -35,7 +34,7 @@ class FavouritesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        component.inject(fragment = this)
+        component.create(fragment = this)
     }
 
     override fun onCreateView(

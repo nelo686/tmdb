@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import coil.api.load
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
-import es.mrmoustard.tmdb.di.detail.DetailModule
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
@@ -38,11 +37,11 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private val component by lazy {
-        app.component.plus(module = DetailModule())
+        app.component.addDetailModule()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component.inject(activity = this)
+        component.create(activity = this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
