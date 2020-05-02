@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import dagger.Lazy
 import es.mrmoustard.tmdb.R
-import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentFavouritesBinding
-import es.mrmoustard.tmdb.di.favourite.FavouriteModule
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
@@ -23,10 +22,14 @@ import javax.inject.Inject
 class FavouritesFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: FavouriteViewModel
+    lateinit var viewModelInjection: Lazy<FavouriteViewModel>
+
+    private val viewModel: FavouriteViewModel by lazy {
+        viewModelInjection.get()
+    }
 
     private val component by lazy {
-        (requireActivity() as MainActivity).app.component.plus(module = FavouriteModule())
+        (requireActivity() as MainActivity).component.addFavouriteModule().create(fragment = this)
     }
 
     private lateinit var binding: FragmentFavouritesBinding

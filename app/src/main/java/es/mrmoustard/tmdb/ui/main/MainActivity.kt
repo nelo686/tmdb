@@ -8,9 +8,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import es.mrmoustard.tmdb.R
+import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    val component by lazy {
+        app.component.addMainModule().create(activity = this)
+    }
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)

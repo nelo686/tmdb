@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import dagger.Lazy
 import es.mrmoustard.tmdb.R
-import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentTopratedBinding
-import es.mrmoustard.tmdb.di.home.HomeModule
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
@@ -21,10 +20,13 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: HomeViewModel
+    lateinit var viewModelInjection: Lazy<HomeViewModel>
 
+    private val viewModel: HomeViewModel by lazy {
+        viewModelInjection.get()
+    }
     private val component by lazy {
-        (activity as MainActivity).app.component.plus(module = HomeModule())
+        (requireActivity() as MainActivity).component.addHomeModule().create(fragment = this)
     }
 
     private lateinit var binding: FragmentTopratedBinding
@@ -47,7 +49,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
 
         binding.rvMovies.adapter = adapter
