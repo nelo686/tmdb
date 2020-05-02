@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.toSpanned
 import androidx.lifecycle.Observer
 import coil.api.load
+import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
@@ -29,7 +30,11 @@ import javax.inject.Inject
 class DetailActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModel: DetailViewModel
+    lateinit var viewModelInjection: Lazy<DetailViewModel>
+
+    private val viewModel: DetailViewModel by lazy {
+        viewModelInjection.get()
+    }
 
     companion object Builder {
         const val MOVIE_ID = "MOVIE_ID"
@@ -37,11 +42,11 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private val component by lazy {
-        app.component.addDetailModule()
+        app.component.addDetailModule().create(activity = this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component.create(activity = this)
+        component.inject(activity = this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 

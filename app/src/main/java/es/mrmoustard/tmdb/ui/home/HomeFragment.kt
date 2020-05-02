@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         viewModelInjection.get()
     }
     private val component by lazy {
-        (requireActivity() as MainActivity).component.addHomeModule()
+        (requireActivity() as MainActivity).component.addHomeModule().create(fragment = this)
     }
 
     private lateinit var binding: FragmentTopratedBinding
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        component.create(fragment = this)
+        component.inject(fragment = this)
     }
 
     override fun onCreateView(
@@ -49,8 +49,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        component.create(fragment = this)
-
         adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
 
         binding.rvMovies.adapter = adapter

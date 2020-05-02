@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import dagger.Lazy
 import es.mrmoustard.tmdb.R
-import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.FragmentWatchlistBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.domain.entities.MovieFlags
@@ -22,10 +22,14 @@ import javax.inject.Inject
 class WatchListFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: WatchListViewModel
+    lateinit var viewModelInjection: Lazy<WatchListViewModel>
+
+    private val viewModel: WatchListViewModel by lazy {
+        viewModelInjection.get()
+    }
 
     private val component by lazy {
-        (requireActivity() as MainActivity).component.addWatchListModule()
+        (requireActivity() as MainActivity).component.addWatchListModule().create(fragment = this)
     }
 
     private lateinit var binding: FragmentWatchlistBinding
@@ -34,7 +38,7 @@ class WatchListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        component.create(fragment = this)
+        component.inject(fragment = this)
     }
 
     override fun onCreateView(
@@ -48,7 +52,6 @@ class WatchListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
 
         binding.rvMovies.adapter = adapter
