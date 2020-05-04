@@ -10,7 +10,7 @@ import es.mrmoustard.tmdb.di.watchlist.WatchListSubComponent
 import es.mrmoustard.tmdb.ui.main.MainActivity
 
 @ActivityScope
-@Subcomponent()
+@Subcomponent(modules = [MainAbstractModule::class])
 interface MainSubComponent {
 
     @Subcomponent.Factory
