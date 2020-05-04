@@ -15,8 +15,8 @@ import coil.api.load
 import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.common.spanWith
@@ -99,7 +99,7 @@ class DetailActivity : AppCompatActivity() {
         overviewHeader.tvHeaderTitle.text = getString(R.string.overview_header)
         tvOverview.text = movie.overview
         setButtonsStatus(
-            flags = MovieFlags(
+            flags = MovieStatus(
                 id = movie.id,
                 favourite = movie.favourite,
                 wannaWatchIt = movie.wannaWatchIt
@@ -136,7 +136,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-    private fun setButtonsStatus(flags: MovieFlags) {
+    private fun setButtonsStatus(flags: MovieStatus) {
         val favColour = when (flags.favourite) {
             true -> R.color.yellow
             false -> android.R.color.white

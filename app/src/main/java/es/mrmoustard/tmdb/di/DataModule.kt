@@ -1,12 +1,16 @@
 package es.mrmoustard.tmdb.di
 
-import android.content.Context
+import android.app.Application
+import androidx.room.Room
 import es.mrmoustard.tmdb.BuildConfig
-import es.mrmoustard.tmdb.data.datasource.agreement.TmdbService
+import es.mrmoustard.tmdb.data.datasource.movies.TmdbService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import es.mrmoustard.tmdb.data.db.MoviesDatabase
+import es.mrmoustard.tmdb.DataModel
+import es.mrmoustard.tmdb.data.datasource.database.AppDatabase
+import es.mrmoustard.tmdb.data.datasource.database.LocalMoviesDataSource
+import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSource
 import es.mrmoustard.tmdb.data.repository.MoviesRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,10 +22,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class DataModule(
-    private val baseUrl: String,
-    private val bearer: String
-) {
+class DataModule {
 
     companion object {
         private const val BEARER = "Bearer"
@@ -29,7 +30,7 @@ class DataModule(
 
     @Provides
     @Singleton
-    fun provideHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
+    fun httpLoggingInterceptorProvider() = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
         } else {
@@ -39,7 +40,10 @@ class DataModule(
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun okHttpClientProvider(
+        dataModel: DataModel,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(object : Interceptor {
@@ -48,7 +52,7 @@ class DataModule(
 
                     val request = chain.request().newBuilder()
                         .header("Content-Type", "application/json;charset=utf-8")
-                        .header("Authorization", "$BEARER $bearer")
+                        .header("Authorization", "$BEARER ${dataModel.bearer}")
                         .method(original.method, original.body)
                         .build()
 
@@ -59,27 +63,25 @@ class DataModule(
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl(baseUrl)
-        .client(okHttpClient)
-        .build()
+    fun retrofitProvider(dataModel: DataModel, okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .baseUrl(dataModel.baseUrl)
+            .client(okHttpClient)
+            .build()
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): TmdbService =
+    fun apiServiceProvider(retrofit: Retrofit): TmdbService =
         retrofit.create(TmdbService::class.java)
 
     @Provides
-    fun provideMoviesRepository(
-        service: TmdbService,
-        db: MoviesDatabase
-    ) = MoviesRepository(
-        service = service,
-        db = db
-    )
+    fun movieDatabaseProvider(application: Application): AppDatabase =
+        Room.databaseBuilder(application, AppDatabase::class.java, "db").build()
 
     @Provides
-    fun provideMovieDatabase(context: Context) =
-        MoviesDatabase.getInstance(context = context)
+    fun moviesRepositoryProvider(
+        remote: MoviesRemoteDataSource,
+        local: LocalMoviesDataSource
+    ): MoviesRepository = MoviesRepository(remote = remote, local = local)
 }

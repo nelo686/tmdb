@@ -1,5 +1,7 @@
 package es.mrmoustard.tmdb.domain.entities
 
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
+
 data class MovieDetail(
     val adult: Boolean,
     val backdropPath: String,
@@ -30,8 +32,8 @@ data class MovieDetail(
     val wannaWatchIt: Boolean = false
 )
 
-fun MovieDetail.toMovieFlags(): MovieFlags =
-    MovieFlags(
+fun MovieDetail.toMovieStatus(): MovieStatus =
+    MovieStatus(
         id = id,
         title = title,
         backdropPath = backdropPath,

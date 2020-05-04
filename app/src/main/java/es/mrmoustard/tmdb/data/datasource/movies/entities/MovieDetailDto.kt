@@ -1,10 +1,10 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.datasource.movies.entities
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.entities.Collection
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
 
 @JsonClass(generateAdapter = true)
 data class MovieDetailDto(
@@ -37,8 +37,8 @@ data class MovieDetailDto(
     val wannaWatchIt: Boolean = false
 )
 
-fun MovieDetailDto.setFlags(flags: MovieFlags): MovieDetailDto =
-    copy(favourite = flags.favourite, wannaWatchIt = flags.wannaWatchIt)
+fun MovieDetailDto.setStatus(status: MovieStatus): MovieDetailDto =
+    copy(favourite = status.favourite, wannaWatchIt = status.wannaWatchIt)
 
 fun MovieDetailDto.mapToDomain(): MovieDetail =
     MovieDetail(

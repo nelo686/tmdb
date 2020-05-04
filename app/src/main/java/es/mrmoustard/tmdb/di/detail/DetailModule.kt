@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import es.mrmoustard.tmdb.domain.usecases.GetMovieDetailUseCase
-import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieFlagsUseCase
+import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieStatusUseCase
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.detail.DetailViewModel
 import es.mrmoustard.tmdb.ui.detail.DetailViewModelFactory
@@ -13,16 +13,16 @@ import es.mrmoustard.tmdb.ui.detail.DetailViewModelFactory
 class DetailModule {
 
     @Provides
-    fun provideDetailViewModel(
+    fun detailViewModelProvider(
         activity: DetailActivity,
         movieDetailUseCase: GetMovieDetailUseCase,
-        updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
+        updateOrInsertMovieStatusUseCase: UpdateOrInsertMovieStatusUseCase
     ): DetailViewModel =
         ViewModelProvider(
             activity,
             DetailViewModelFactory(
                 movieDetailUseCase = movieDetailUseCase,
-                updateOrInsertMovieFlagsUseCase = updateOrInsertMovieFlagsUseCase
+                updateOrInsertMovieStatusUseCase = updateOrInsertMovieStatusUseCase
             )
         ).get(DetailViewModel::class.java)
 }

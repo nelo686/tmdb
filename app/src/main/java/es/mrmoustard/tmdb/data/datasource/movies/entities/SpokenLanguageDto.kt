@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.datasource.movies.entities
 
 import es.mrmoustard.tmdb.domain.entities.SpokenLanguage
 import com.squareup.moshi.Json
@@ -13,8 +13,5 @@ data class SpokenLanguageDto(
 fun SpokenLanguageDto.mapToDomain(): SpokenLanguage =
     SpokenLanguage(iso6391 = iso6391, name = name)
 
-fun List<SpokenLanguageDto>.mapToDomain(): List<SpokenLanguage> {
-    val list: MutableList<SpokenLanguage> = mutableListOf()
-    this.forEach { list.add(element = it.mapToDomain()) }
-    return list
-}
+fun List<SpokenLanguageDto>.mapToDomain(): List<SpokenLanguage> =
+    this.map { it.mapToDomain() }

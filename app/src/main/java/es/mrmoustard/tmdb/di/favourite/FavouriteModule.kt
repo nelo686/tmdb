@@ -12,7 +12,7 @@ import es.mrmoustard.tmdb.ui.favourites.FavouriteViewModelFactory
 class FavouriteModule {
 
     @Provides
-    fun provideFavouriteViewModel(
+    fun favouriteViewModelProvider(
         fragment: Fragment,
         useCase: GetFavouriteMoviesUseCase
     ): FavouriteViewModel =

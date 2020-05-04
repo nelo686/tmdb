@@ -12,7 +12,7 @@ import es.mrmoustard.tmdb.ui.home.HomeViewModelFactory
 class HomeModule {
 
     @Provides
-    fun provideHomeViewModel(
+    fun homeViewModelProvider(
         fragment: Fragment,
         useCase: GetTopRatedUseCase
     ): HomeViewModel =
