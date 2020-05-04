@@ -75,6 +75,10 @@ dependencies {
     implementation parent.ext.libraries.navigation
     implementation parent.ext.libraries.navigation_fragment
 
+    implementation parent.ext.libraries.timber
+
+    implementation parent.ext.libraries.dexter
+
     testImplementation 'junit:junit:4.13'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
