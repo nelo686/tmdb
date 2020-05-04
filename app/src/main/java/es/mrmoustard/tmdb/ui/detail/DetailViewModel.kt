@@ -3,10 +3,10 @@ package es.mrmoustard.tmdb.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
-import es.mrmoustard.tmdb.domain.entities.toMovieFlags
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
+import es.mrmoustard.tmdb.domain.entities.toMovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetMovieDetailUseCase
-import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieFlagsUseCase
+import es.mrmoustard.tmdb.domain.usecases.UpdateOrInsertMovieStatusUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.Flags
 import kotlinx.coroutines.launch
@@ -14,10 +14,10 @@ import kotlinx.coroutines.withContext
 
 class DetailViewModel(
     private val movieDetailUseCase: GetMovieDetailUseCase,
-    private val updateOrInsertMovieFlagsUseCase: UpdateOrInsertMovieFlagsUseCase
+    private val updateOrInsertMovieStatusUseCase: UpdateOrInsertMovieStatusUseCase
 ) : ViewModel(), Scope by Scope.Impl() {
 
-    private lateinit var movie: MovieFlags
+    private lateinit var movie: MovieStatus
     private val _model = MutableLiveData<DetailUiModel>()
     val model: LiveData<DetailUiModel>
         get() = _model
@@ -39,7 +39,7 @@ class DetailViewModel(
         }.fold({
             _model.value = DetailUiModel.ErrorResponse
         }, {
-            this.movie = it.toMovieFlags()
+            this.movie = it.toMovieStatus()
             _model.value = DetailUiModel.Content(movie = it)
         })
     }
@@ -54,10 +54,10 @@ class DetailViewModel(
         updateOrInsertMovieAtDatabase(item = movie)
     }
 
-    private fun updateOrInsertMovieAtDatabase(item: MovieFlags) {
+    private fun updateOrInsertMovieAtDatabase(item: MovieStatus) {
         launch {
             withContext(ioDispatcher) {
-                updateOrInsertMovieFlagsUseCase.execute(flags = item)
+                updateOrInsertMovieStatusUseCase.execute(status = item)
             }
             _model.value = Flags(flags = item)
         }

@@ -1,9 +1,8 @@
 package es.mrmoustard.tmdb
 
 import android.app.Application
-import es.mrmoustard.tmdb.data.db.MoviesDatabase
+import es.mrmoustard.tmdb.data.datasource.database.MoviesDatabase
 import es.mrmoustard.tmdb.di.DaggerTmdbComponent
-import es.mrmoustard.tmdb.di.DataModule
 import es.mrmoustard.tmdb.di.TmdbComponent
 
 class TmdbApp : Application() {
@@ -13,7 +12,8 @@ class TmdbApp : Application() {
             .factory()
             .create(
                 context = this,
-                dataModule = DataModule(
+                application = this,
+                dataModel = DataModel(
                     baseUrl = BuildConfig.BASE_URL,
                     bearer = BuildConfig.BEARER
                 )

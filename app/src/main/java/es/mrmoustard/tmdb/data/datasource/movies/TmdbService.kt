@@ -1,7 +1,7 @@
-package es.mrmoustard.tmdb.data.datasource.agreement
+package es.mrmoustard.tmdb.data.datasource.movies
 
-import es.mrmoustard.tmdb.data.entities.MovieDetailDto
-import es.mrmoustard.tmdb.data.entities.WrapperDto
+import es.mrmoustard.tmdb.data.datasource.movies.entities.MovieDetailDto
+import es.mrmoustard.tmdb.data.datasource.movies.entities.WrapperDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

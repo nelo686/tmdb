@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.Lazy
 import es.mrmoustard.tmdb.R
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.databinding.FragmentWatchlistBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.home.ItemAdapter
 import es.mrmoustard.tmdb.ui.main.MainActivity
@@ -72,7 +72,7 @@ class WatchListFragment : Fragment() {
         }
     }
 
-    private fun setContentState(movies: List<MovieFlags>) {
+    private fun setContentState(movies: List<MovieStatus>) {
         adapter.items = movies.map {
             Movie(id = it.id, title = it.title, backdropPath = it.backdropPath)
         }

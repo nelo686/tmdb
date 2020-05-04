@@ -1,13 +1,12 @@
-package es.mrmoustard.tmdb.data.db
+package es.mrmoustard.tmdb.data.datasource.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import es.mrmoustard.tmdb.data.datasource.agreement.MovieDao
-import es.mrmoustard.tmdb.domain.entities.*
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 
-@Database(entities = [MovieFlags::class], version = 1)
+@Database(entities = [MovieStatus::class], version = 1)
 abstract class MoviesDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao

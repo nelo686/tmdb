@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.datasource.movies.entities
 
 import es.mrmoustard.tmdb.domain.entities.Movie
 import com.squareup.moshi.Json
@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class MovieDto(
     val adult: Boolean,
-    @Json(name = "backdrop_path") val backdropPath: String,
+    @Json(name = "backdrop_path") val backdropPath: String?,
     @Json(name = "genre_ids") val genreIds: List<Int>,
     val id: Int,
     @Json(name = "original_language") val originalLanguage: String,
@@ -25,7 +25,7 @@ data class MovieDto(
 fun MovieDto.mapToDomain(): Movie =
     Movie(
         adult = adult,
-        backdropPath = backdropPath,
+        backdropPath = backdropPath ?: "",
         genreIds = genreIds,
         id = id,
         originalLanguage = originalLanguage,
@@ -40,8 +40,5 @@ fun MovieDto.mapToDomain(): Movie =
         voteCount = voteCount
     )
 
-fun List<MovieDto>.mapToDomain(): List<Movie> {
-    val mutableList = mutableListOf<Movie>()
-    this.forEach { mutableList.add(it.mapToDomain()) }
-    return mutableList
-}
+fun List<MovieDto>.mapToDomain(): List<Movie> =
+    this.map { it.mapToDomain() }
