@@ -3,7 +3,7 @@ package es.mrmoustard.tmdb.ui.favourites
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetFavouriteMoviesUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
 import es.mrmoustard.tmdb.ui.favourites.FavouriteUiModel.*
@@ -27,7 +27,7 @@ class FavouriteViewModel(
 
     fun getMoviesToWatch() {
         launch {
-            var result: List<MovieFlags> = emptyList()
+            var result: List<MovieStatus> = emptyList()
             _model.value = Loading
             withContext(ioDispatcher) {
                 result = useCase.execute()

@@ -1,66 +1,69 @@
 package es.mrmoustard.tmdb.data.repository
 
 import arrow.core.Either
-import es.mrmoustard.tmdb.data.datasource.agreement.TmdbService
-import es.mrmoustard.tmdb.data.db.MoviesDatabase
-import es.mrmoustard.tmdb.data.entities.mapToDomain
-import es.mrmoustard.tmdb.data.entities.setFlags
+import es.mrmoustard.tmdb.data.datasource.database.LocalMoviesDataSource
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
+import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSource
+import es.mrmoustard.tmdb.data.datasource.movies.entities.mapToDomain
+import es.mrmoustard.tmdb.data.datasource.movies.entities.setStatus
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
 import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
 import es.mrmoustard.tmdb.domain.errors.DomainError
 
 class MoviesRepository(
-    private val service: TmdbService,
-    private val db: MoviesDatabase
+    private val remote: MoviesRemoteDataSource,
+    private val local: LocalMoviesDataSource
 ) {
 
-    suspend fun getTopRated(page: Int, region: String): Either<DomainError, TopRatedWrapper> = try {
-        val wrapperDto = service.getTopRated(page = page, region = region)
-        Either.right(wrapperDto.mapToDomain())
-    } catch (e: Exception) {
-        Either.left(e.parseErrorFormResponse())
+    suspend fun getTopRated(page: Int, region: String): Either<DomainError, TopRatedWrapper> =
+        remote.getTopRated(page = page, region = region).fold(
+            { Either.left(it.mapToDomain()) },
+            { Either.right(it.mapToDomain()) }
+        )
+
+    suspend fun getMovieDetails(movieId: Int): Either<DomainError, MovieDetail> =
+        remote.getMovieDetails(movieId = movieId).fold(
+            {
+                Either.left(it.mapToDomain())
+            }, {
+                val filmDetail = it.apply {
+                    it.setStatus(status = findItem(movieId = movieId))
+                }
+                Either.right(filmDetail.mapToDomain())
+            }
+        )
+
+    private suspend fun findItem(movieId: Int): MovieStatus =
+        local.findById(id = movieId) ?: MovieStatus(id = movieId)
+
+    private suspend fun insertItem(status: MovieStatus) {
+        local.insert(item = status)
     }
 
-    suspend fun getMovieDetails(movieId: Int): Either<DomainError, MovieDetail> = try {
-        var detailDto = service.getMovieDetails(movieId = movieId)
-        detailDto = detailDto.setFlags(flags = findMovieFlags(movieId = movieId))
-        Either.right(detailDto.mapToDomain())
-    } catch (e: Exception) {
-        Either.left(e.parseErrorFormResponse())
+    private suspend fun deleteItem(status: MovieStatus) {
+        local.delete(item = status)
     }
 
-    private suspend fun findMovieFlags(movieId: Int): MovieFlags =
-        db.movieDao().findById(id = movieId) ?: MovieFlags(id = movieId)
-
-    suspend fun insertMovieFlags(flags: MovieFlags) {
-        db.movieDao().insert(flags = flags)
-    }
-
-    suspend fun deleteMovieFlags(flags: MovieFlags) {
-        db.movieDao().delete(flags = flags)
-    }
-
-    suspend fun updateMovieFlags(flags: MovieFlags) {
-        db.movieDao().update(
-            movieId = flags.id,
-            favourite = flags.favourite,
-            wannaWatchIt = flags.wannaWatchIt
+    private suspend fun updateItem(status: MovieStatus) {
+        local.update(
+            movieId = status.id,
+            favourite = status.favourite,
+            wannaWatchIt = status.wannaWatchIt
         )
     }
 
-    suspend fun updateOrInsertMovieFlags(flags: MovieFlags) {
-        val item = db.movieDao().findById(id = flags.id)
+    suspend fun updateOrInsertMovieStatus(status: MovieStatus) {
+        val item = local.findById(id = status.id)
         when {
-            item == null -> insertMovieFlags(flags = flags)
-            !flags.favourite && !flags.wannaWatchIt -> deleteMovieFlags(flags = item)
-            else -> updateMovieFlags(flags = flags)
+            item == null -> insertItem(status = status)
+            !status.favourite && !status.wannaWatchIt -> deleteItem(status = item)
+            else -> updateItem(status = status)
         }
     }
 
-    suspend fun findMoviesToWatch(): List<MovieFlags> =
-        db.movieDao().findMoviesToWatch()
+    suspend fun findMoviesToWatch(): List<MovieStatus> =
+        local.findMoviesToWatch()
 
-    suspend fun findFavouriteMovies(): List<MovieFlags> =
-        db.movieDao().findFavourites()
+    suspend fun findFavouriteMovies(): List<MovieStatus> =
+        local.findFavourites()
 }

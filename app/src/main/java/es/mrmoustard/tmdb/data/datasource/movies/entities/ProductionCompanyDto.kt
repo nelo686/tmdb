@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.datasource.movies.entities
 
 import es.mrmoustard.tmdb.domain.entities.ProductionCompany
 import com.squareup.moshi.Json
@@ -20,8 +20,5 @@ fun ProductionCompanyDto.mapToDomain(): ProductionCompany =
         originCountry = originCountry
     )
 
-fun List<ProductionCompanyDto>.mapToDomain(): List<ProductionCompany> {
-    val list: MutableList<ProductionCompany> = mutableListOf()
-    this.forEach { list.add(element = it.mapToDomain()) }
-    return list
-}
+fun List<ProductionCompanyDto>.mapToDomain(): List<ProductionCompany> =
+    this.map { it.mapToDomain() }

@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.data.entities
+package es.mrmoustard.tmdb.data.datasource.movies.entities
 
 import es.mrmoustard.tmdb.domain.entities.Collection
 import com.squareup.moshi.Json

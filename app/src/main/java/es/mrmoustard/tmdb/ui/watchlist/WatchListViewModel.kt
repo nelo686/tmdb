@@ -3,7 +3,7 @@ package es.mrmoustard.tmdb.ui.watchlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.mrmoustard.tmdb.domain.entities.MovieFlags
+import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetMoviesToWatchUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class WatchListViewModel(
 
     fun getMoviesToWatch() {
         launch {
-            var result: List<MovieFlags> = emptyList()
+            var result: List<MovieStatus> = emptyList()
             _model.value = WatchListUiModel.Loading
             withContext(ioDispatcher) {
                 result = useCase.execute()

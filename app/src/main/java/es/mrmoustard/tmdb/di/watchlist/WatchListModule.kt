@@ -12,7 +12,7 @@ import es.mrmoustard.tmdb.ui.watchlist.WatchListViewModelFactory
 class WatchListModule {
 
     @Provides
-    fun provideWatchListViewModel(
+    fun watchListViewModelProvider(
         fragment: Fragment,
         useCase: GetMoviesToWatchUseCase
     ): WatchListViewModel =
