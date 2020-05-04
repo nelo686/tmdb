@@ -52,6 +52,7 @@ def constraintVersion = "2.0.0-beta4"
 def coroutineVersion = '1.3.5'
 def coroutinesVersionTest = '1.3.5'
 def daggerVersion = '2.27'
+def dexterVersion = '6.0.2'
 def gsonVersion = '2.8.4'
 def lifecycleVersion = '2.2.0'
 def materialVersion = '1.1.0'
@@ -60,6 +61,7 @@ def navigationVersion = '2.2.1'
 def okhttp3Version = '4.4.0'
 def retrofitVersion = '2.7.2'
 def roomVersion = "2.2.5"
+def timberVersion = "4.7.1"
 
 ext.libraries = [
         arrow_core              : "io.arrow-kt:arrow-core:$arrowVersion",
@@ -69,6 +71,7 @@ ext.libraries = [
         constraint_layout       : "androidx.constraintlayout:constraintlayout:$constraintVersion",
         dagger                  : "com.google.dagger:dagger:$daggerVersion",
         dagger_compiler         : "com.google.dagger:dagger-compiler:$daggerVersion",
+        dexter                  : "com.karumi:dexter:$dexterVersion",
         gson                    : "com.google.code.gson:gson:$gsonVersion",
         lifecycle               : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
         moshi                   : "com.squareup.moshi:moshi-kotlin:$moshiVersion",
@@ -89,6 +92,7 @@ ext.libraries = [
         room_ktx                : "androidx.room:room-ktx:$roomVersion",
         room_compiler           : "androidx.room:room-compiler:$roomVersion",
         room_testing            : "androidx.room:room-testing:$roomVersion",
+        timber                  : "com.jakewharton.timber:timber:$timberVersion",
 
         mockWebServer_okhttp : "com.squareup.okhttp3:mockwebserver:$okhttp3Version"
 ]

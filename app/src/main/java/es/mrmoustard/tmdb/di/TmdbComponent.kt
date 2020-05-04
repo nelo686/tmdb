@@ -11,7 +11,7 @@ import es.mrmoustard.tmdb.di.main.MainSubComponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class, DataAbstractModule::class])
+@Component(modules = [DataModule::class, DataAbstractModule::class, TmdbModule::class])
 interface TmdbComponent {
 
     @Component.Factory
