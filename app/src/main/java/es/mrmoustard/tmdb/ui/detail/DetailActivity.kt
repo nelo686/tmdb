@@ -16,15 +16,13 @@ import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
+import es.mrmoustard.tmdb.databinding.ActivityMovieDetailsBinding
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.common.spanWith
 import es.mrmoustard.tmdb.ui.common.tintColour
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.*
-import kotlinx.android.synthetic.main.activity_movie_details.*
-import kotlinx.android.synthetic.main.view_header.view.*
-import kotlinx.android.synthetic.main.view_highlight_header.view.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
@@ -45,10 +43,14 @@ class DetailActivity : AppCompatActivity() {
         app.component.addDetailModule().create(activity = this)
     }
 
+    private val binding: ActivityMovieDetailsBinding by lazy {
+        ActivityMovieDetailsBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(activity = this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_details)
+        setContentView(binding.root)
 
         viewModel.onViewCreated(intent.extras?.getInt(MOVIE_ID) ?: -1)
         viewModel.model.observe(this, Observer(::updateUi))
@@ -56,17 +58,17 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        ivFavourite.setOnClickListener { viewModel.onFavouriteClicked() }
-        ivWannaWatch.setOnClickListener { viewModel.onWannaWatchItClicked() }
+        binding.ivFavourite.setOnClickListener { viewModel.onFavouriteClicked() }
+        binding.ivWannaWatch.setOnClickListener { viewModel.onWannaWatchItClicked() }
     }
 
     private fun updateUi(model: DetailUiModel) {
-        loader.visibility = if (model is Loading) View.VISIBLE else View.GONE
+        binding.loader.visibility = if (model is Loading) View.VISIBLE else View.GONE
 
         when (model) {
             is Content -> setContent(model.movie)
             is ErrorResponse -> showMessage(
-                view = clRoot,
+                view = binding.clRoot,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
             is Flags -> setButtonsStatus(flags = model.flags)
@@ -74,12 +76,12 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setContent(movie: MovieDetail) {
-        ivPoster.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
-        tvTitle.text = movie.title
+        binding.ivPoster.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
+        binding.tvTitle.text = movie.title
 
         setTagline(tagline = movie.tagline)
 
-        with(highlight) {
+        with(binding.highlight) {
             tvAverage.text = SpannableString("${movie.voteAverage}/10").apply {
                 spanWith(movie.voteAverage.toString()) {
                     what = listOf(AbsoluteSizeSpan(BOLD_TEXT_SIZE, true), StyleSpan(Typeface.BOLD))
@@ -96,8 +98,8 @@ class DetailActivity : AppCompatActivity() {
                 "${tvSpokenLanguages.text}: ${movie.spokenLanguages.map { it.name }.readList()}"
         }
 
-        overviewHeader.tvHeaderTitle.text = getString(R.string.overview_header)
-        tvOverview.text = movie.overview
+        binding.overviewHeader.tvHeaderTitle.text = getString(R.string.overview_header)
+        binding.tvOverview.text = movie.overview
         setButtonsStatus(
             flags = MovieStatus(
                 id = movie.id,
@@ -109,17 +111,17 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setTagline(tagline: String) {
         if (tagline.isNotEmpty()) {
-            tvTagLine.text = "\"${tagline}\""
+            binding.tvTagLine.text = "\"${tagline}\""
         } else {
             ConstraintSet().apply {
-                clone(clRoot)
+                clone(binding.clRoot)
                 connect(
                     R.id.highlight, ConstraintSet.TOP,
                     R.id.tvTitle, ConstraintSet.BOTTOM
                 )
-                applyTo(clRoot)
+                applyTo(binding.clRoot)
             }
-            tvTagLine.visibility = View.GONE
+            binding.tvTagLine.visibility = View.GONE
         }
     }
 
@@ -141,12 +143,12 @@ class DetailActivity : AppCompatActivity() {
             true -> R.color.yellow
             false -> android.R.color.white
         }
-        ivFavourite.tintColour(colour = favColour)
+        binding.ivFavourite.tintColour(colour = favColour)
 
         val watchColour = when (flags.wannaWatchIt) {
             true -> R.color.colorAccent
             false -> android.R.color.white
         }
-        ivWannaWatch.tintColour(colour = watchColour)
+        binding.ivWannaWatch.tintColour(colour = watchColour)
     }
 }

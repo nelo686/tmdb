@@ -1,14 +1,12 @@
 package es.mrmoustard.tmdb.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import es.mrmoustard.tmdb.databinding.ViewMovieBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.ui.common.AutoUpdatableAdapter
-import kotlinx.android.synthetic.main.view_movie.view.*
 import kotlin.properties.Delegates
 
 class ItemAdapter(private val listener: (Int) -> Unit) :
@@ -28,7 +26,7 @@ class ItemAdapter(private val listener: (Int) -> Unit) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ).root
+            )
         )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -37,11 +35,11 @@ class ItemAdapter(private val listener: (Int) -> Unit) :
 
     override fun getItemCount(): Int = items.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val binding: ViewMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie, listener: (Int) -> Unit) = with(itemView) {
             setOnClickListener { listener(item.id) }
-            ivPoster.load("$IMAGE_BASE_URL${item.backdropPath}")
-            tvTitle.text = item.title
+            binding.ivPoster.load("$IMAGE_BASE_URL${item.backdropPath}")
+            binding.tvTitle.text = item.title
         }
     }
 }
