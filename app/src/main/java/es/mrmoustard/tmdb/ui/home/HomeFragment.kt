@@ -12,6 +12,7 @@ import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.databinding.FragmentTopratedBinding
 import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
+import es.mrmoustard.tmdb.ui.common.ItemAdapter
 import es.mrmoustard.tmdb.ui.common.showMessage
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.main.MainActivity
@@ -31,7 +32,12 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentTopratedBinding
 
-    private lateinit var adapter: ItemAdapter
+    private val adapter: ItemAdapter by lazy {
+        ItemAdapter(
+            imageBaseUrl = (requireActivity() as MainActivity).imageBaseUrl,
+            listener = viewModel::onMovieClicked
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,8 +55,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
-
         binding.rvMovies.adapter = adapter
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
     }

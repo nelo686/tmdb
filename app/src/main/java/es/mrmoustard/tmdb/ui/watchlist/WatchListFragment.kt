@@ -14,7 +14,7 @@ import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.databinding.FragmentWatchlistBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
-import es.mrmoustard.tmdb.ui.home.ItemAdapter
+import es.mrmoustard.tmdb.ui.common.ItemAdapter
 import es.mrmoustard.tmdb.ui.main.MainActivity
 import es.mrmoustard.tmdb.ui.watchlist.WatchListUiModel.*
 import javax.inject.Inject
@@ -34,7 +34,12 @@ class WatchListFragment : Fragment() {
 
     private lateinit var binding: FragmentWatchlistBinding
 
-    private lateinit var adapter: ItemAdapter
+    private val adapter: ItemAdapter by lazy {
+        ItemAdapter(
+            imageBaseUrl = (requireActivity() as MainActivity).imageBaseUrl,
+            listener = viewModel::onMovieClicked
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,8 +57,6 @@ class WatchListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = ItemAdapter { viewModel.onMovieClicked(movieId = it) }
-
         binding.rvMovies.adapter = adapter
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
     }

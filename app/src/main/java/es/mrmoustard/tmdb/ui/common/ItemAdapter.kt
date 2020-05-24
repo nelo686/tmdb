@@ -1,4 +1,4 @@
-package es.mrmoustard.tmdb.ui.home
+package es.mrmoustard.tmdb.ui.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import es.mrmoustard.tmdb.databinding.ViewMovieBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
-import es.mrmoustard.tmdb.ui.common.AutoUpdatableAdapter
 import kotlin.properties.Delegates
 
-class ItemAdapter(private val listener: (Int) -> Unit) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), AutoUpdatableAdapter {
+class ItemAdapter(
+    private val imageBaseUrl: String,
+    private val listener: (Int) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), AutoUpdatableAdapter {
 
     companion object {
-        private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342"
+        private const val IMAGE_RESOLUTION = "w342"
     }
 
     var items: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
@@ -30,15 +31,19 @@ class ItemAdapter(private val listener: (Int) -> Unit) :
         )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).bind(item = items[position], listener = listener)
+        (holder as ViewHolder).bind(
+            item = items[position],
+            listener = listener,
+            imageBaseUrl = imageBaseUrl
+        )
     }
 
     override fun getItemCount(): Int = items.size
 
     class ViewHolder(private val binding: ViewMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Movie, listener: (Int) -> Unit) = with(itemView) {
+        fun bind(item: Movie, listener: (Int) -> Unit, imageBaseUrl: String) = with(itemView) {
             setOnClickListener { listener(item.id) }
-            binding.ivPoster.load("$IMAGE_BASE_URL${item.backdropPath}")
+            binding.ivPoster.load("$imageBaseUrl$IMAGE_RESOLUTION${item.backdropPath}")
             binding.tvTitle.text = item.title
         }
     }

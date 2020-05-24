@@ -24,11 +24,15 @@ import es.mrmoustard.tmdb.ui.common.spanWith
 import es.mrmoustard.tmdb.ui.common.tintColour
 import es.mrmoustard.tmdb.ui.detail.DetailUiModel.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class DetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelInjection: Lazy<DetailViewModel>
+    @Inject
+    @Named(value = "imageBaseUrl")
+    lateinit var imageBaseUrl: String
 
     private val viewModel: DetailViewModel by lazy {
         viewModelInjection.get()
@@ -37,6 +41,7 @@ class DetailActivity : AppCompatActivity() {
     companion object Builder {
         const val MOVIE_ID = "MOVIE_ID"
         private const val BOLD_TEXT_SIZE = 21
+        private const val IMAGE_RESOLUTION = "w780"
     }
 
     private val component by lazy {
@@ -76,7 +81,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setContent(movie: MovieDetail) {
-        binding.ivPoster.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
+        binding.ivPoster.load("$imageBaseUrl$IMAGE_RESOLUTION${movie.backdropPath}")
         binding.tvTitle.text = movie.title
 
         setTagline(tagline = movie.tagline)

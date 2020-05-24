@@ -10,8 +10,14 @@ import androidx.navigation.ui.setupWithNavController
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app
 import es.mrmoustard.tmdb.databinding.ActivityMainBinding
+import javax.inject.Inject
+import javax.inject.Named
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    @Named(value = "imageBaseUrl")
+    lateinit var imageBaseUrl: String
 
     val component by lazy {
         app.component.addMainModule().create(activity = this)
@@ -26,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(activity = this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 

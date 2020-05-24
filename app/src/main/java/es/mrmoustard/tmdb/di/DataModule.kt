@@ -19,6 +19,7 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -84,4 +85,8 @@ class DataModule {
         remote: MoviesRemoteDataSource,
         local: LocalMoviesDataSource
     ): MoviesRepository = MoviesRepository(remote = remote, local = local)
+
+    @Provides
+    @Named(value = "imageBaseUrl")
+    fun providesImageBaseUrl(): String = "https://image.tmdb.org/t/p/"
 }
