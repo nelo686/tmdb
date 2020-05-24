@@ -26,10 +26,8 @@ class MoviesRepository(
             {
                 Either.left(it.mapToDomain())
             }, {
-                val filmDetail = it.apply {
-                    it.setStatus(status = findItem(movieId = movieId))
-                }
-                Either.right(filmDetail.mapToDomain())
+                val details = it.setStatus(status = findItem(movieId = movieId))
+                Either.right(details.mapToDomain())
             }
         )
 
