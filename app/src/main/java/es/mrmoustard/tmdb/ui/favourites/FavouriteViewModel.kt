@@ -7,12 +7,15 @@ import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetFavouriteMoviesUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
 import es.mrmoustard.tmdb.ui.favourites.FavouriteUiModel.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FavouriteViewModel(
+    mainDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher,
     private val useCase: GetFavouriteMoviesUseCase
-) : ViewModel(), Scope by Scope.Impl() {
+) : ViewModel(), Scope by Scope.Impl(mainDispatcher = mainDispatcher, ioDispatcher = ioDispatcher) {
 
     private val _model = MutableLiveData<FavouriteUiModel>()
     val model: LiveData<FavouriteUiModel>

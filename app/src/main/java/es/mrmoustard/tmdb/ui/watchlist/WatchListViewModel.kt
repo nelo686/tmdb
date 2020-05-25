@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetMoviesToWatchUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class WatchListViewModel(
+    mainDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher,
     private val useCase: GetMoviesToWatchUseCase
-) : ViewModel(), Scope by Scope.Impl() {
+) : ViewModel(), Scope by Scope.Impl(mainDispatcher = mainDispatcher, ioDispatcher = ioDispatcher) {
 
     private val _model = MutableLiveData<WatchListUiModel>()
     val model: LiveData<WatchListUiModel>

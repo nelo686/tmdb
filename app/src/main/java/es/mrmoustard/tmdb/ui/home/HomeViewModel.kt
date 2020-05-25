@@ -9,15 +9,18 @@ import es.mrmoustard.tmdb.domain.errors.DomainError
 import es.mrmoustard.tmdb.domain.usecases.GetCountryCodeUseCase
 import es.mrmoustard.tmdb.domain.usecases.GetTopRatedUseCase
 import es.mrmoustard.tmdb.ui.common.Scope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class HomeViewModel(
+    mainDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher,
     private val getTopRatedUseCase: GetTopRatedUseCase,
     private val getCountryCodeUseCase: GetCountryCodeUseCase
-) : ViewModel(), Scope by Scope.Impl() {
+) : ViewModel(), Scope by Scope.Impl(mainDispatcher = mainDispatcher, ioDispatcher = ioDispatcher) {
 
     private val _model = MutableLiveData<HomeUiModel>()
     val model: LiveData<HomeUiModel>
@@ -27,19 +30,6 @@ class HomeViewModel(
         initScope()
         getTopRated()
     }
-
-//    private fun getTopRated(page: Int = 1, region: String = "") {
-//        launch {
-//            _model.value = HomeUiModel.Loading
-//            withContext(ioDispatcher) {
-//                getTopRatedUseCase.execute(page = page, region = region)
-//            }.fold({
-//                _model.value = HomeUiModel.ErrorResponse
-//            }, {
-//                _model.value = HomeUiModel.Content(movies = it.results)
-//            })
-//        }
-//    }
 
     private fun getTopRated(page: Int = 1) {
         launch {
