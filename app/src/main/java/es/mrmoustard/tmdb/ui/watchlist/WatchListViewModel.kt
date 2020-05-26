@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.domain.usecases.GetMoviesToWatchUseCase
+import es.mrmoustard.tmdb.ui.common.Event
 import es.mrmoustard.tmdb.ui.common.Scope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -22,6 +23,10 @@ class WatchListViewModel(
             if (_model.value == null) getMoviesToWatch()
             return _model
         }
+
+    private val _detailTransition = MutableLiveData<Event<Int>>()
+    val detailTransition: LiveData<Event<Int>>
+        get() = _detailTransition
 
     init {
         initScope()
@@ -43,7 +48,7 @@ class WatchListViewModel(
     }
 
     fun onMovieClicked(movieId: Int) {
-        _model.value = WatchListUiModel.Navigate(movieId = movieId)
+        _detailTransition.value = Event(content = movieId)
     }
 
     override fun onCleared() {

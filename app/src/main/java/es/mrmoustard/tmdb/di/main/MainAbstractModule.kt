@@ -9,7 +9,7 @@ import dagger.Module
 abstract class MainAbstractModule {
 
     @Binds
-    abstract fun provideLocationDeviceDataSource(
+    abstract fun locationDeviceDataSourceProvider(
         dataSource: LocationDeviceDataSourceImpl
     ): LocationDeviceDataSource
 }

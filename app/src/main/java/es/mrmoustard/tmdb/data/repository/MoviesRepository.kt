@@ -9,7 +9,9 @@ import es.mrmoustard.tmdb.data.datasource.movies.entities.setStatus
 import es.mrmoustard.tmdb.domain.entities.MovieDetail
 import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
 import es.mrmoustard.tmdb.domain.errors.DomainError
+import javax.inject.Singleton
 
+@Singleton
 class MoviesRepository(
     private val remote: MoviesRemoteDataSource,
     private val local: LocalMoviesDataSource

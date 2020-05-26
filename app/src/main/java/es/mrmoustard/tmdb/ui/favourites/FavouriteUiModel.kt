@@ -6,5 +6,4 @@ sealed class FavouriteUiModel {
     object Loading : FavouriteUiModel()
     object EmptyState : FavouriteUiModel()
     class Content(val movies: List<MovieStatus>) : FavouriteUiModel()
-    class Navigate(val movieId: Int) : FavouriteUiModel()
 }

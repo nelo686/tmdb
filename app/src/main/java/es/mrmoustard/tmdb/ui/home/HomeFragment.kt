@@ -11,9 +11,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.databinding.FragmentTopratedBinding
-import es.mrmoustard.tmdb.ui.common.ErrorSnackbarStyle
-import es.mrmoustard.tmdb.ui.common.ItemAdapter
-import es.mrmoustard.tmdb.ui.common.showMessage
+import es.mrmoustard.tmdb.ui.common.*
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.main.MainActivity
 import javax.inject.Inject
@@ -21,11 +19,15 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     @Inject
+    lateinit var permissionManager: LocationPermissionManager
+
+    @Inject
     lateinit var viewModelInjection: Lazy<HomeViewModel>
 
     private val viewModel: HomeViewModel by lazy {
         viewModelInjection.get()
     }
+
     private val component by lazy {
         (requireActivity() as MainActivity).component.addHomeModule().create(fragment = this)
     }
@@ -56,7 +58,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvMovies.adapter = adapter
-        viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
+
+        viewModel.run {
+            model.observe(viewLifecycleOwner, Observer(::updateUi))
+            detailTransition.observe(viewLifecycleOwner, EventObserver(::goToDetail))
+            permissionTransition.observe(viewLifecycleOwner, EventObserver(::checkPermission))
+        }
     }
 
     private fun updateUi(model: HomeUiModel) {
@@ -68,12 +75,24 @@ class HomeFragment : Fragment() {
                 view = binding.rvMovies,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
-            is HomeUiModel.Navigate -> {
-                findNavController().navigate(
-                    R.id.action_navigation_home_to_detail_activity,
-                    Bundle().apply { putInt(DetailActivity.MOVIE_ID, model.movieId) }
-                )
-            }
+        }
+    }
+
+    private fun goToDetail(movieId: Int) {
+        findNavController().navigate(
+            R.id.action_navigation_home_to_detail_activity,
+            Bundle().apply { putInt(DetailActivity.MOVIE_ID, movieId) }
+        )
+    }
+
+    private fun checkPermission(perform: Boolean) {
+        if (perform) {
+            permissionManager.checkPermission(
+                success = { viewModel.getTopRated() },
+                failure = { viewModel.getTopRated() }
+            )
+        } else {
+            viewModel.getTopRated()
         }
     }
 }

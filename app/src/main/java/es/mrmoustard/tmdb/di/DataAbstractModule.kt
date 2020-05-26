@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import es.mrmoustard.tmdb.data.datasource.database.LocalMoviesDataSource
 import es.mrmoustard.tmdb.data.datasource.database.LocalMoviesDataSourceImpl
+import es.mrmoustard.tmdb.data.datasource.location.LocationDeviceDataSource
+import es.mrmoustard.tmdb.data.datasource.location.LocationDeviceDataSourceImpl
 import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSource
 import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSourceImpl
 
@@ -11,12 +13,12 @@ import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSourceImpl
 abstract class DataAbstractModule {
 
     @Binds
-    abstract fun provideMoviesRemoteDataSource(
+    abstract fun moviesRemoteDataSourceProvider(
         dataSource: MoviesRemoteDataSourceImpl
     ): MoviesRemoteDataSource
 
     @Binds
-    abstract fun provideLocalFilmsDataSource(
+    abstract fun localFilmsDataSourceProvider(
         dataSource: LocalMoviesDataSourceImpl
     ): LocalMoviesDataSource
 }

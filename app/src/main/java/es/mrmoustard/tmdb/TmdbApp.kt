@@ -26,6 +26,7 @@ class TmdbApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        component.inject(app = this)
         db = MoviesDatabase.getInstance(context = this)
 
         if (BuildConfig.DEBUG) {

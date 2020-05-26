@@ -8,6 +8,7 @@ import es.mrmoustard.tmdb.domain.entities.TopRatedWrapper
 import es.mrmoustard.tmdb.domain.errors.DomainError
 import es.mrmoustard.tmdb.domain.usecases.GetCountryCodeUseCase
 import es.mrmoustard.tmdb.domain.usecases.GetTopRatedUseCase
+import es.mrmoustard.tmdb.ui.common.Event
 import es.mrmoustard.tmdb.ui.common.Scope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +27,20 @@ class HomeViewModel(
     val model: LiveData<HomeUiModel>
         get() = _model
 
+    private val _detailTransition = MutableLiveData<Event<Int>>()
+    val detailTransition: LiveData<Event<Int>>
+        get() = _detailTransition
+
+    private val _permissionTransition = MutableLiveData<Event<Boolean>>()
+    val permissionTransition: LiveData<Event<Boolean>>
+        get() = _permissionTransition
+
     init {
         initScope()
-        getTopRated()
+        _permissionTransition.value = Event(content = true)
     }
 
-    private fun getTopRated(page: Int = 1) {
+    fun getTopRated(page: Int = 1) {
         launch {
             _model.value = HomeUiModel.Loading
             withContext(ioDispatcher, getTopRatedMovies(page)).fold(
@@ -63,7 +72,7 @@ class HomeViewModel(
         }
 
     fun onMovieClicked(movieId: Int) {
-        _model.value = HomeUiModel.Navigate(movieId = movieId)
+        _detailTransition.value = Event(content = movieId)
     }
 
     override fun onCleared() {

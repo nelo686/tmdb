@@ -13,6 +13,7 @@ import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.databinding.FragmentWatchlistBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
+import es.mrmoustard.tmdb.ui.common.EventObserver
 import es.mrmoustard.tmdb.ui.detail.DetailActivity
 import es.mrmoustard.tmdb.ui.common.ItemAdapter
 import es.mrmoustard.tmdb.ui.main.MainActivity
@@ -58,7 +59,10 @@ class WatchListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvMovies.adapter = adapter
-        viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
+        viewModel.run {
+            model.observe(viewLifecycleOwner, Observer(::updateUi))
+            detailTransition.observe(viewLifecycleOwner, EventObserver(::goToDetail))
+        }
     }
 
     private fun updateUi(model: WatchListUiModel) {
@@ -67,11 +71,6 @@ class WatchListFragment : Fragment() {
         when (model) {
             is Content -> setContentState(movies = model.movies)
             is EmptyState -> setEmptyState()
-            is Navigate ->
-                findNavController().navigate(
-                    R.id.action_navigation_watchlist_to_detail_activity,
-                    Bundle().apply { putInt(DetailActivity.MOVIE_ID, model.movieId) }
-                )
         }
     }
 
@@ -86,6 +85,13 @@ class WatchListFragment : Fragment() {
     private fun setEmptyState() {
         binding.rvMovies.visibility = View.GONE
         binding.tvEmpty.visibility = View.VISIBLE
+    }
+
+    private fun goToDetail(movieId: Int) {
+        findNavController().navigate(
+            R.id.action_navigation_watchlist_to_detail_activity,
+            Bundle().apply { putInt(DetailActivity.MOVIE_ID, movieId) }
+        )
     }
 
     override fun onResume() {
