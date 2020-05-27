@@ -46,6 +46,7 @@ ext {
     buildToolsVersion = '29.0.3'
 }
 
+def archCoreVersion = "2.1.0"
 def arrowVersion = "0.10.5"
 def coilVersion = '0.9.5'
 def constraintVersion = "2.0.0-beta4"
@@ -56,6 +57,8 @@ def dexterVersion = '6.0.2'
 def gsonVersion = '2.8.4'
 def lifecycleVersion = '2.2.0'
 def materialVersion = '1.1.0'
+def mockitoKotlinVersion = '2.2.0'
+def mockitoInlineVersion = '2.28.2'
 def moshiVersion = '1.9.2'
 def navigationVersion = '2.2.1'
 def okhttp3Version = '4.4.0'
@@ -94,7 +97,10 @@ ext.libraries = [
         room_testing            : "androidx.room:room-testing:$roomVersion",
         timber                  : "com.jakewharton.timber:timber:$timberVersion",
 
-        mockWebServer_okhttp : "com.squareup.okhttp3:mockwebserver:$okhttp3Version"
+        arch_core               : "androidx.arch.core:core-testing:$archCoreVersion",
+        mockito                 : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+        mockito_inline          : "org.mockito:mockito-inline:$mockitoInlineVersion",
+        mockWebServer_okhttp    : "com.squareup.okhttp3:mockwebserver:$okhttp3Version"
 ]
 
 task clean(type: Delete) {

@@ -21,7 +21,7 @@ class FavouriteViewModel(
     private val _model = MutableLiveData<FavouriteUiModel>()
     val model: LiveData<FavouriteUiModel>
         get() {
-            if (_model.value == null) getMoviesToWatch()
+            if (_model.value == null) getFavourites()
             return _model
         }
 
@@ -33,7 +33,7 @@ class FavouriteViewModel(
         initScope()
     }
 
-    fun getMoviesToWatch() {
+    fun getFavourites() {
         launch {
             var result: List<MovieStatus> = emptyList()
             _model.value = Loading

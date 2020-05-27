@@ -35,6 +35,19 @@ android {
     }
 
     viewBinding.enabled = true
+
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+        String sharedResTestDir = 'src/sharedTest/resources'
+        test {
+            java.srcDir sharedTestDir
+            resources.srcDir sharedResTestDir
+        }
+        androidTest {
+            java.srcDir sharedTestDir
+            resources.srcDir sharedResTestDir
+        }
+    }
 }
 
 dependencies {
@@ -80,6 +93,9 @@ dependencies {
     implementation parent.ext.libraries.dexter
 
     testImplementation 'junit:junit:4.13'
+    testImplementation parent.ext.libraries.arch_core
+    testImplementation parent.ext.libraries.mockito
+    testImplementation parent.ext.libraries.mockito_inline
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

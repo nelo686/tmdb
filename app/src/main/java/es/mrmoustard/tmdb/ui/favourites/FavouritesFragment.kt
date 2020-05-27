@@ -96,7 +96,7 @@ class FavouritesFragment : Fragment() {
     }
 
     override fun onResume() {
-        viewModel.getMoviesToWatch()
+        viewModel.getFavourites()
         super.onResume()
     }
 }
