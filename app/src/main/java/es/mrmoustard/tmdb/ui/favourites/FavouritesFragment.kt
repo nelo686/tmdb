@@ -51,7 +51,7 @@ class FavouritesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFavouritesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -72,6 +72,7 @@ class FavouritesFragment : Fragment() {
         when (model) {
             is Content -> setContentState(movies = model.movies)
             is EmptyState -> setEmptyState()
+            else -> {}
         }
     }
 

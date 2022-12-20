@@ -35,7 +35,7 @@ class FavouriteViewModel(
 
     fun getMoviesToWatch() {
         launch {
-            var result: List<MovieStatus> = emptyList()
+            var result: List<MovieStatus>
             _model.value = Loading
             withContext(ioDispatcher) {
                 result = useCase.execute()

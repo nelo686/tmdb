@@ -77,6 +77,7 @@ class DetailActivity : AppCompatActivity() {
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
             is Flags -> setButtonsStatus(flags = model.flags)
+            else -> {}
         }
     }
 

@@ -15,7 +15,7 @@ inline fun <reified T : ViewModel> createFactory(crossinline provideViewModel: (
         ViewModelProvider.NewInstanceFactory =
     object : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
-        override fun <U : ViewModel?> create(modelClass: Class<U>): U {
+        override fun <U : ViewModel> create(modelClass: Class<U>): U {
             return provideViewModel() as U
         }
     }

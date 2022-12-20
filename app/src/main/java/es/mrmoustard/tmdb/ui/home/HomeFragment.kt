@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTopratedBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -75,6 +75,7 @@ class HomeFragment : Fragment() {
                 view = binding.rvMovies,
                 style = ErrorSnackbarStyle(message = getString(R.string.something_happen))
             )
+            else -> {}
         }
     }
 

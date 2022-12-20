@@ -51,7 +51,7 @@ class WatchListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentWatchlistBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -71,6 +71,7 @@ class WatchListFragment : Fragment() {
         when (model) {
             is Content -> setContentState(movies = model.movies)
             is EmptyState -> setEmptyState()
+            else -> {}
         }
     }
 

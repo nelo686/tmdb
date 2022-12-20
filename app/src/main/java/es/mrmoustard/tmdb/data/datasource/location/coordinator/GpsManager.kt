@@ -7,6 +7,7 @@ import android.location.*
 import android.os.Bundle
 import android.os.Looper
 import androidx.annotation.RequiresPermission
+import arrow.core.extensions.list.foldable.toList
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,10 +17,12 @@ class GpsManager @Inject constructor(private val application: Application) {
         (application.getSystemService(Context.LOCATION_SERVICE) as? LocationManager?)
     }
 
-    @RequiresPermission(allOf = [
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ])
+    @RequiresPermission(
+        allOf = [
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ]
+    )
     fun startLocationService(countryCodeResponse: (String) -> Unit) {
         locationManager?.requestSingleUpdate(
             LocationManager.GPS_PROVIDER,
@@ -33,11 +36,11 @@ class GpsManager @Inject constructor(private val application: Application) {
                     Timber.d("Status changed")
                 }
 
-                override fun onProviderEnabled(provider: String?) {
+                override fun onProviderEnabled(provider: String) {
                     Timber.d("Location enabled")
                 }
 
-                override fun onProviderDisabled(provider: String?) {
+                override fun onProviderDisabled(provider: String) {
                     countryCodeResponse("")
                     Timber.d("Location disabled")
                 }
@@ -51,7 +54,7 @@ class GpsManager @Inject constructor(private val application: Application) {
             location.latitude,
             location.longitude,
             1
-        )
+        )?.toList() ?: emptyList()
 
     private fun getCountryCode(addresses: List<Address>): String =
         if (addresses.isNotEmpty()) {

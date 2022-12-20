@@ -34,7 +34,7 @@ class WatchListViewModel(
 
     fun getMoviesToWatch() {
         launch {
-            var result: List<MovieStatus> = emptyList()
+            var result: List<MovieStatus>
             _model.value = WatchListUiModel.Loading
             withContext(ioDispatcher) {
                 result = useCase.execute()
