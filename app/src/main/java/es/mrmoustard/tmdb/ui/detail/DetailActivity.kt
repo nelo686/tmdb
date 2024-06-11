@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.toSpanned
 import androidx.lifecycle.Observer
-import coil.api.load
+import coil.load
 import dagger.Lazy
 import es.mrmoustard.tmdb.R
 import es.mrmoustard.tmdb.app

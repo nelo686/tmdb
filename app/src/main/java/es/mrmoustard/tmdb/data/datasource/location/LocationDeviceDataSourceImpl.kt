@@ -1,8 +1,8 @@
 package es.mrmoustard.tmdb.data.datasource.location
 
 import arrow.core.Either
-import arrow.core.Left
-import arrow.core.Right
+import arrow.core.Either.Left
+import arrow.core.Either.Right
 import es.mrmoustard.tmdb.data.datasource.location.entities.ErrorDto
 import es.mrmoustard.tmdb.data.datasource.location.entities.LocationDto
 import es.mrmoustard.tmdb.data.datasource.location.coordinator.LocationCoordinator

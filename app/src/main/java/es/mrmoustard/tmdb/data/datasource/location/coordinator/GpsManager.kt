@@ -4,10 +4,8 @@ import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.location.*
-import android.os.Bundle
 import android.os.Looper
 import androidx.annotation.RequiresPermission
-import arrow.core.extensions.list.foldable.toList
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,10 +28,6 @@ class GpsManager @Inject constructor(private val application: Application) {
                 override fun onLocationChanged(location: Location) {
                     val addresses = getAddresses(location)
                     countryCodeResponse(getCountryCode(addresses = addresses))
-                }
-
-                override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-                    Timber.d("Status changed")
                 }
 
                 override fun onProviderEnabled(provider: String) {

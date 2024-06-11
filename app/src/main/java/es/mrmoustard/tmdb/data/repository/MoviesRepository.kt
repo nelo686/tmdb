@@ -1,6 +1,8 @@
 package es.mrmoustard.tmdb.data.repository
 
 import arrow.core.Either
+import arrow.core.Either.Left
+import arrow.core.Either.Right
 import es.mrmoustard.tmdb.data.datasource.database.LocalMoviesDataSource
 import es.mrmoustard.tmdb.data.datasource.database.entities.MovieStatus
 import es.mrmoustard.tmdb.data.datasource.movies.MoviesRemoteDataSource
@@ -19,17 +21,17 @@ class MoviesRepository(
 
     suspend fun getTopRated(page: Int, region: String): Either<DomainError, TopRatedWrapper> =
         remote.getTopRated(page = page, region = region).fold(
-            { Either.left(it.mapToDomain()) },
-            { Either.right(it.mapToDomain()) }
+            { Left(it.mapToDomain()) },
+            { Right(it.mapToDomain()) }
         )
 
     suspend fun getMovieDetails(movieId: Int): Either<DomainError, MovieDetail> =
         remote.getMovieDetails(movieId = movieId).fold(
             {
-                Either.left(it.mapToDomain())
+                Left(it.mapToDomain())
             }, {
                 val details = it.setStatus(status = findItem(movieId = movieId))
-                Either.right(details.mapToDomain())
+                Right(details.mapToDomain())
             }
         )
 

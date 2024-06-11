@@ -3,7 +3,7 @@ package es.mrmoustard.tmdb.ui.common
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import es.mrmoustard.tmdb.databinding.ViewMovieBinding
 import es.mrmoustard.tmdb.domain.entities.Movie
 import kotlin.properties.Delegates
