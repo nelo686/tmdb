@@ -19,3 +19,5 @@ I did use the following libraries:
 - Dagger 2, to be able to inject dependencies.
 - Coil, to load images efficiently.
 - Arrow, to be able to use Eithers.
+
+I used **jUnit** and **Mockito** test *viewModels*. There also are some integration tests.
